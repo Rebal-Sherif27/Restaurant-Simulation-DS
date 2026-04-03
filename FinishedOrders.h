@@ -1,5 +1,10 @@
 #pragma once
+#include "ArrayStack.h"
 
-class FinishedOrders
+class Order;
+
+class FinishedOrders : public ArrayStack<Order*>
 {
+public:
+    FinishedOrders(){}
 };
