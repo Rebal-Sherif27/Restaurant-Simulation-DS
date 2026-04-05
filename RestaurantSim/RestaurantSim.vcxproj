@@ -134,7 +134,9 @@
     <ClCompile Include="..\MaintScooters.cpp" />
     <ClCompile Include="..\ReadyOD.cpp" />
     <ClCompile Include="..\ReadyOT.cpp" />
+    <ClCompile Include="order.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
+    <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ActionList.h" />
@@ -149,6 +151,8 @@
     <ClInclude Include="..\QueueADT.h" />
     <ClInclude Include="..\ReadyOT.h" />
     <ClInclude Include="..\StackADT.h" />
+    <ClInclude Include="order.h" />
+    <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
