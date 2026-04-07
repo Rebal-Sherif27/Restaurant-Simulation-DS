@@ -17,7 +17,7 @@ public:
 	int getCurrentLoad() const;
 	bool getIsSharable() const;
 	void setCurrentLoad(int load);
-
+    //ayhghjhghj
 	// Core Functions
 	void assignOrder(Order* newOrder);
 	void freeTable();
