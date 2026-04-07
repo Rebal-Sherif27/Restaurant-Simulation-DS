@@ -3,7 +3,7 @@
 #include "Action.h"
 #include "Order.h"
 
-class Restaurant; // Forward declaration
+class Restaurant;
 
 class ActionList {
 private:
@@ -12,12 +12,10 @@ private:
 public:
     ActionList();
     ~ActionList();
-    
+
     void AddAction(Action* pAct);
     void ExecuteActions(int currentTime, Restaurant* pRest);
 };
-
-// --- Specific Action Classes ---
 
 class RequestAction : public Action {
     Order* pOrd;
@@ -32,3 +30,4 @@ public:
     CancelAction(int time, int id);
     virtual void Execute(Restaurant* pRest);
 };
+
