@@ -1,9 +1,12 @@
 #include <iostream>
+#include "LinkedQueue.h"
+#include "order.h"
 using namespace std; 
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    LinkedQueue<order*> ReadyOT;
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

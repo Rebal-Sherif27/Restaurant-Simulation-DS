@@ -1,25 +1,18 @@
 #pragma once
 
-class Order; // <-- This is the Forward Declaration. It tells the compiler "Order exists, trust me."
-
-class Table {
+class order {
 private:
-	int tableID;
-	int capacity;
-	int currentLoad;
-	bool isSharable;
-	Order* currentOrder;
+    int orderID;
+    int numPeople;
 
 public:
-	Table(int id, int capacity, bool sharable);
-	int getTableID() const;
-	int getCapacity() const;
-	int getCurrentLoad() const;
-	bool getIsSharable() const;
-	void setCurrentLoad(int load);
+    // Constructor
+    order(int id, int people);
 
-	// Core Functions
-	void assignOrder(Order* newOrder);
-	void freeTable();
+    // Getters
+    int getOrderID() const;
+    int getNumPeople() const;
+
+    // You can add more variables (like arrival time, order type) 
+    // here later based on Person 3's exact requirements.
 };
-

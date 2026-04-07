@@ -1,22 +1,22 @@
 #pragma once
+
 class Table
 {
 	int tabelID;
-	int capcity;
+	int capacity;
 	int currentload;
 	bool issharabel;
-	Order* currentOrder;
+	order* currentorder;
 public:
-	Table(int id, int capcity, bool sharable);
+	Table(int id, int capacity, bool sharable);
 	int getTabelID() const;
-	int getCapcity() const;
+	int getCapacity() const;
 	int getCurrentload() const;
 	bool isSharable() const;
 	void setCurrentload(int load);
 	void setSharable(bool status);
 	// Core Functions
-	void assignOrder(Order* newOrder);
+	void assignorder(order* neworder);
 	void freeTable();
 
 };
-

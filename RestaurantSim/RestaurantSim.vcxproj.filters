@@ -35,10 +35,13 @@
     <ClCompile Include="..\ReadyOT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="order.cpp">
+    <ClCompile Include="Fit_Tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,10 +82,16 @@
     <ClInclude Include="..\StackADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="order.h">
+    <ClInclude Include="Fit_Tables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="priQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
