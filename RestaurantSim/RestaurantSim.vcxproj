@@ -134,8 +134,11 @@
     <ClCompile Include="..\ReadyOD.cpp" />
     <ClCompile Include="..\ReadyOT.cpp" />
     <ClCompile Include="ActionList.cpp" />
+    <ClCompile Include="Cook_Ords.cpp" />
     <ClCompile Include="Fit_Tables.cpp" />
     <ClCompile Include="order.cpp" />
+    <ClCompile Include="Pend_OVC.cpp" />
+    <ClCompile Include="RDY_OV.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
     <ClCompile Include="Table.cpp" />
@@ -149,14 +152,16 @@
     <ClInclude Include="..\LinkedQueue.h" />
     <ClInclude Include="..\MaintScooters.h" />
     <ClInclude Include="..\Node.h" />
-    <ClInclude Include="..\priQueue.h" />
     <ClInclude Include="..\QueueADT.h" />
     <ClInclude Include="..\ReadyOT.h" />
     <ClInclude Include="..\StackADT.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="Cook_Ords.h" />
     <ClInclude Include="Fit_Tables.h" />
     <ClInclude Include="order.h" />
+    <ClInclude Include="Pend_OVC.h" />
     <ClInclude Include="priQueue.h" />
+    <ClInclude Include="RDY_OV.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Table.h" />
   </ItemGroup>

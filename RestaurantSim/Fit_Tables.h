@@ -2,8 +2,7 @@
 #include "priQueue.h"
 #include "Table.h"
 
-class Fit_Tables :
-    public priQueue < Table* >
+class Fit_Tables : public priQueue < Table* >
 {
     Table* getBest()
     {
