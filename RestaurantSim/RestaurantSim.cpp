@@ -28,7 +28,7 @@ int main() {
 
     // 3. Test Output
     cout << "Simulation Initialized." << endl;
-    cout << "Available Tables: " << FreeTables.getCount() << endl;
+    cout << "Available Tables: " << FreeTables. << endl;
 
     // Your logic for moving tables between lists goes here (likely inside a loop)
 

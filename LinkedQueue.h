@@ -40,10 +40,13 @@ Single Node Case:
 
 #ifndef LINKED_QUEUE_
 #define LINKED_QUEUE_
-using namespace std;
 
 #include "Node.h"
 #include "QueueADT.h"
+#include <iostream>
+
+using namespace std;
+
 
 template <typename T>
 class LinkedQueue:public QueueADT<T>
@@ -51,7 +54,8 @@ class LinkedQueue:public QueueADT<T>
 protected:  //in case you need to inherit for the project
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
-	int count; // Added by Rebal
+	int Count; // Added by Rebal
+
 public :
 	LinkedQueue();	
 	int getCount() const;        // Added by Rebal
@@ -159,9 +163,7 @@ copies the front of this queue to the passed param. The operation does not modif
 Input: None.
 Output: The front of the queue.
 */
-#include <iostream>
-#include <iostream>
-using namespace std;
+
 template <typename T>
 bool LinkedQueue<T>:: peek(T& frntEntry) const 
 {
@@ -192,13 +194,19 @@ LinkedQueue<T>::~LinkedQueue()
 
 // Added by Rebal for testing purposes
 template <typename T>
-int LinkedQueue<T>::getCount() const {
+int LinkedQueue<T>::getCount() const
+{
 	return count;
 }
 
 template <typename T>
-void LinkedQueue<T>::print() const {
+void LinkedQueue<T>::print() const 
+{
 	Node<T>* curr = frontPtr;
+	if (!curr) {
+		cout << "Empty" << endl;
+		return;
+	}
 	while (curr) {
 		cout << curr->getItem() << " ";
 		curr = curr->getNext();
