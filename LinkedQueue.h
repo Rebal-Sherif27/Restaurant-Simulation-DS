@@ -51,8 +51,11 @@ class LinkedQueue:public QueueADT<T>
 protected:  //in case you need to inherit for the project
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
+	int count; // Added by Rebal
 public :
 	LinkedQueue();	
+	int getCount() const;        // Added by Rebal
+	void print() const;          // Added by Rebal
 	bool isEmpty() const ;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);  
@@ -72,6 +75,7 @@ LinkedQueue<T>::LinkedQueue()
 {
 	backPtr=nullptr;
 	frontPtr=nullptr;
+	count = 0;
 
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +113,7 @@ bool LinkedQueue<T>::enqueue( const T& newEntry)
 		backPtr->setNext(newNodePtr); // The queue was not empty
 
 	backPtr = newNodePtr; // New node is the last node now
+		count++; // Increment the count added by rebal
 	return true ;
 } // end enqueue
 
@@ -138,6 +143,7 @@ bool LinkedQueue<T>:: dequeue(T& frntEntry)
 		
 	// Free memory reserved for the dequeued node
 	delete nodeToDeletePtr;
+	count--; // Decrement the count added by rebal
 
 	return true;
 }
@@ -182,6 +188,22 @@ LinkedQueue<T>::~LinkedQueue()
 	
 	cout<<"\n Is LinkedQueue Empty now?? ==> "<<boolalpha<<isEmpty();
 	cout<<"\nEnding LinkedQueue destructor..."<<endl;
+}
+
+// Added by Rebal for testing purposes
+template <typename T>
+int LinkedQueue<T>::getCount() const {
+	return count;
+}
+
+template <typename T>
+void LinkedQueue<T>::print() const {
+	Node<T>* curr = frontPtr;
+	while (curr) {
+		cout << curr->getItem() << " ";
+		curr = curr->getNext();
+	}
+	cout << endl;
 }
 
 #endif
