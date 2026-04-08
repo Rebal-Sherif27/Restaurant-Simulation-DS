@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -127,15 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ACTION_LIST.cpp" />
     <ClCompile Include="..\Chef.cpp" />
     <ClCompile Include="..\FreeCN.cpp" />
     <ClCompile Include="..\FreeCS.cpp" />
     <ClCompile Include="..\MaintScooters.cpp" />
     <ClCompile Include="..\ReadyOD.cpp" />
     <ClCompile Include="..\ReadyOT.cpp" />
+    <ClCompile Include="ActionList.cpp" />
     <ClCompile Include="Fit_Tables.cpp" />
     <ClCompile Include="order.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
     <ClCompile Include="Table.cpp" />
   </ItemGroup>
@@ -152,9 +153,11 @@
     <ClInclude Include="..\QueueADT.h" />
     <ClInclude Include="..\ReadyOT.h" />
     <ClInclude Include="..\StackADT.h" />
+    <ClInclude Include="Action.h" />
     <ClInclude Include="Fit_Tables.h" />
     <ClInclude Include="order.h" />
     <ClInclude Include="priQueue.h" />
+    <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
