@@ -40,7 +40,7 @@ Single Node Case:
 
 #ifndef LINKED_QUEUE_
 #define LINKED_QUEUE_
-
+using namespace std;
 
 #include "Node.h"
 #include "QueueADT.h"
@@ -153,7 +153,9 @@ copies the front of this queue to the passed param. The operation does not modif
 Input: None.
 Output: The front of the queue.
 */
-
+#include <iostream>
+#include <iostream>
+using namespace std;
 template <typename T>
 bool LinkedQueue<T>:: peek(T& frntEntry) const 
 {
