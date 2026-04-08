@@ -15,34 +15,22 @@ Chef::Chef(int id, ChefType type, int speed)
 }
 
 int Chef::GetID() const
-{
-    return ID;
-}
+{return ID;}
 
 ChefType Chef::GetType() const
-{
-    return Type;
-}
+{return Type;}
 
 int Chef::GetSpeed() const
-{
-    return Speed;
-}
+{ return Speed;}
 
 void Chef::SetID(int id)
-{
-    ID = id;
-}
+{ ID = id;}
 
 void Chef::SetType(ChefType type)
-{
-    Type = type;
-}
+{ Type = type;}
 
 void Chef::SetSpeed(int speed)
-{
-    Speed = speed;
-}
+{ Speed = speed;}
 
 void Chef::Print() const
 {
