@@ -32,19 +32,43 @@
     <ClCompile Include="..\ReadyOT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="order.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fit_Tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActionList.cpp">
+    <ClCompile Include="Cook_Ords.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Restaurant.cpp">
+    <ClCompile Include="Pend_OVC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RDY_OV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ActionList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\priNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\priQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Queue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Restaurant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Scooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,9 +97,6 @@
     <ClInclude Include="..\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\priQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\QueueADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -85,22 +106,49 @@
     <ClInclude Include="..\StackADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="order.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fit_Tables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="priQueue.h">
+    <ClInclude Include="Cook_Ords.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Action.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Pend_OVC.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Restaurant.h">
+    <ClInclude Include="RDY_OV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\1-Stack(jody).h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Action.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CookingQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\priNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\priQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReadyOD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Restaurant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Scooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,5 +156,11 @@
     <None Include="..\README.md" />
     <None Include="..\Stacks_Queues.sln" />
     <None Include="..\Stacks_Queues.v11.suo" />
+    <None Include="..\.gitattributes" />
+    <None Include="..\.gitignore" />
+    <None Include="..\1-Stacks.psess" />
+    <None Include="..\1-Stacks190324.vsp" />
+    <None Include="..\Restuarant Project.vcxproj" />
+    <None Include="..\Restuarant Project.vcxproj.filters" />
   </ItemGroup>
 </Project>

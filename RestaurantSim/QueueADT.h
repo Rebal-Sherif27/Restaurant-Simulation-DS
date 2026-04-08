@@ -10,6 +10,10 @@ template<class T>
 class QueueADT
 {
 public:
+
+	/// BY REBAL  Gets the current number of entries in this queue.
+    virtual int getCount() const = 0;
+
    /** Sees whether this queue is empty.
     @return  True if the queue is empty, or false if not. */
    virtual bool isEmpty() const = 0;

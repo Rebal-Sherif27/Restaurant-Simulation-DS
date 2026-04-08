@@ -19,23 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>18.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{addcd370-c67e-4102-a54f-b6c996a44a02}</ProjectGuid>
-    <RootNamespace>RestaurantSim</RootNamespace>
+    <ProjectGuid>{2ff4e373-8622-44c1-8fcd-b79a60dc0d1d}</ProjectGuid>
+    <RootNamespace>RestuarantProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Restaurant Project</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -76,7 +77,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,7 +91,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,7 +103,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +117,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,65 +124,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ActionList.cpp" />
-    <ClCompile Include="..\Chef.cpp" />
-    <ClCompile Include="..\FreeCN.cpp" />
-    <ClCompile Include="..\FreeCS.cpp" />
-    <ClCompile Include="..\main.cpp" />
-    <ClCompile Include="..\MaintScooters.cpp" />
-    <ClCompile Include="..\Order.cpp" />
-    <ClCompile Include="..\priNode.cpp" />
-    <ClCompile Include="..\priQueue.cpp" />
-    <ClCompile Include="..\Queue.cpp" />
-    <ClCompile Include="..\ReadyOD.cpp" />
-    <ClCompile Include="..\ReadyOT.cpp" />
-    <ClCompile Include="..\Restaurant.cpp" />
-    <ClCompile Include="..\Scooter.cpp" />
-    <ClCompile Include="Cook_Ords.cpp" />
-    <ClCompile Include="Fit_Tables.cpp" />
-    <ClCompile Include="Pend_OVC.cpp" />
-    <ClCompile Include="RDY_OV.cpp" />
-    <ClCompile Include="RestaurantSim.cpp" />
-    <ClCompile Include="Table.cpp" />
+    <ClInclude Include="CookingQueue.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="priNode.h" />
+    <ClInclude Include="priQueue.h" />
+    <ClInclude Include="Queue.h" />
+    <ClInclude Include="Restaurant.h" />
+    <ClInclude Include="Scooter.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\1-Stack(jody).h" />
-    <ClInclude Include="..\Action.h" />
-    <ClInclude Include="..\ActionList.h" />
-    <ClInclude Include="..\ArrayStack.h" />
-    <ClInclude Include="..\Chef.h" />
-    <ClInclude Include="..\CookingQueue.h" />
-    <ClInclude Include="..\FinishedOrders.h" />
-    <ClInclude Include="..\FreeCN.h" />
-    <ClInclude Include="..\LinkedQueue.h" />
-    <ClInclude Include="..\MaintScooters.h" />
-    <ClInclude Include="..\Node.h" />
-    <ClInclude Include="..\Order.h" />
-    <ClInclude Include="..\priNode.h" />
-    <ClInclude Include="..\priQueue.h" />
-    <ClInclude Include="..\Queue.h" />
-    <ClInclude Include="..\QueueADT.h" />
-    <ClInclude Include="..\ReadyOD.h" />
-    <ClInclude Include="..\ReadyOT.h" />
-    <ClInclude Include="..\Restaurant.h" />
-    <ClInclude Include="..\Scooter.h" />
-    <ClInclude Include="..\StackADT.h" />
-    <ClInclude Include="Cook_Ords.h" />
-    <ClInclude Include="Fit_Tables.h" />
-    <ClInclude Include="Pend_OVC.h" />
-    <ClInclude Include="RDY_OV.h" />
-    <ClInclude Include="Table.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.gitattributes" />
-    <None Include="..\.gitignore" />
-    <None Include="..\1-Stacks.psess" />
-    <None Include="..\1-Stacks190324.vsp" />
-    <None Include="..\README.md" />
-    <None Include="..\Restuarant Project.vcxproj" />
-    <None Include="..\Restuarant Project.vcxproj.filters" />
-    <None Include="..\Stacks_Queues.sln" />
-    <None Include="..\Stacks_Queues.v11.suo" />
+    <ClCompile Include="CookingQueue.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Order.cpp" />
+    <ClCompile Include="priNode.cpp" />
+    <ClCompile Include="priQueue.cpp" />
+    <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
+    <ClCompile Include="Scooter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
