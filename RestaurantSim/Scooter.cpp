@@ -1,5 +1,8 @@
 #include "Scooter.h"
 #include <iostream>
+using namespace std;
+
+
 //consrtuctors:
 Scooter::Scooter() : ID(0), Speed(0), Main_Dur(0), Main_Ords(0), OrderServed(0) {}
 

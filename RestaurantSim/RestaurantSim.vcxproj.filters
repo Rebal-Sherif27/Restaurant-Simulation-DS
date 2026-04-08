@@ -14,24 +14,6 @@
     <ClCompile Include="RestaurantSim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Chef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FreeCN.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FreeCS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MaintScooters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReadyOD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReadyOT.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,65 +29,50 @@
     <ClCompile Include="RDY_OV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\ActionList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Order.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\priNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\priQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Queue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Scooter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Restaurant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scooter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReadyOT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReadyOD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="priNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="priQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Queue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeCN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaintScooters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeCS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ActionList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ArrayStack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Chef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FinishedOrders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FreeCN.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\LinkedQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\MaintScooters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\QueueADT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReadyOT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\StackADT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,46 +88,88 @@
     <ClInclude Include="RDY_OV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\1-Stack(jody).h">
+    <ClInclude Include="Scooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Action.h">
+    <ClInclude Include="StackADT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\CookingQueue.h">
+    <ClInclude Include="Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Order.h">
+    <ClInclude Include="ActionList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\priNode.h">
+    <ClInclude Include="ArrayStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\priQueue.h">
+    <ClInclude Include="Chef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Queue.h">
+    <ClInclude Include="CookingQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReadyOD.h">
+    <ClInclude Include="FinishedOrders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Restaurant.h">
+    <ClInclude Include="FreeCN.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Scooter.h">
+    <ClInclude Include="FreeCS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaintScooters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="priNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="priQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QueueADT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadyOD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReadyOT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Restaurant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\README.md" />
-    <None Include="..\Stacks_Queues.sln" />
-    <None Include="..\Stacks_Queues.v11.suo" />
-    <None Include="..\.gitattributes" />
-    <None Include="..\.gitignore" />
-    <None Include="..\1-Stacks.psess" />
-    <None Include="..\1-Stacks190324.vsp" />
-    <None Include="..\Restuarant Project.vcxproj" />
-    <None Include="..\Restuarant Project.vcxproj.filters" />
+    <None Include="RestaurantSim.vcxproj.user">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Restuarant Project.vcxproj">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Restuarant Project.vcxproj.filters">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Stacks_Queues.sln">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Stacks_Queues.v11.suo">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
