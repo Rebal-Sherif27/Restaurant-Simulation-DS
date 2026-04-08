@@ -65,10 +65,10 @@
     <ClCompile Include="..\Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Restaurant.cpp">
+    <ClCompile Include="..\Scooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Scooter.cpp">
+    <ClCompile Include="Restaurant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

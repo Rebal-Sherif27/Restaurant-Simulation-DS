@@ -139,12 +139,12 @@
     <ClCompile Include="..\Queue.cpp" />
     <ClCompile Include="..\ReadyOD.cpp" />
     <ClCompile Include="..\ReadyOT.cpp" />
-    <ClCompile Include="..\Restaurant.cpp" />
     <ClCompile Include="..\Scooter.cpp" />
     <ClCompile Include="Cook_Ords.cpp" />
     <ClCompile Include="Fit_Tables.cpp" />
     <ClCompile Include="Pend_OVC.cpp" />
     <ClCompile Include="RDY_OV.cpp" />
+    <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
     <ClCompile Include="Table.cpp" />
   </ItemGroup>

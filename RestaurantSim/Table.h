@@ -1,4 +1,5 @@
 #pragma once
+#include "Order.h"
 
 class Table
 {
@@ -6,7 +7,8 @@ class Table
 	int capacity;
 	int currentload;
 	bool issharabel;
-	order* currentorder;
+	Order* currentorder;
+
 public:
 	Table(int id, int capacity, bool sharable);
 	int getTabelID() const;
@@ -15,8 +17,9 @@ public:
 	bool isSharable() const;
 	void setCurrentload(int load);
 	void setSharable(bool status);
+
 	// Core Functions
-	void assignorder(order* neworder);
+	void assignorder(Order* neworder);
 	void freeTable();
 
 };

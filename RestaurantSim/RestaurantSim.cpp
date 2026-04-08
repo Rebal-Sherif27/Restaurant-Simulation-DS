@@ -1,13 +1,13 @@
 #include <iostream>
 #include "LinkedQueue.h"
-#include "order.h"
+#include "Order.h"
 #include "table.h"
 #include "priQueue.h"
 // #include "Fit_Tables.h" // Keep this if it contains your assignment logic
 
 using namespace std;
 
-int main() {
+int testMain() {
     // 1. Instantiate the Containers
     // IMPORTANT: Make sure 'order' and 'Table' match your .h file capitalization exactly.
     LinkedQueue<Order*> ReadyOT;
@@ -28,7 +28,7 @@ int main() {
 
     // 3. Test Output
     cout << "Simulation Initialized." << endl;
-    cout << "Available Tables: " << FreeTables. << endl;
+    cout << "Available Tables: " << FreeTables.getCount() << endl;
 
     // Your logic for moving tables between lists goes here (likely inside a loop)
 

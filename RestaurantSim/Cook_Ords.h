@@ -1,6 +1,6 @@
 #pragma once
 #include "priQueue.h"
-#include "order.h"
+#include "Order.h"
 
 class Cook_Ords : public priQueue < Order* >
 {

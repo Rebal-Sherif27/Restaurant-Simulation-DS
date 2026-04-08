@@ -1,6 +1,6 @@
 #pragma once
 #include "LinkedQueue.h"
-#include "order.h"
+#include "Order.h"
 
 class Pend_OVC : public LinkedQueue < Order* >
 {

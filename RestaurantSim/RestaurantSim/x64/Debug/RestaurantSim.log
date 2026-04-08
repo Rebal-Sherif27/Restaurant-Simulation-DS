@@ -1,1 +1,2 @@
-﻿
+﻿Table.obj : error LNK2005: "public: int __cdecl Order::getNumPeople(void)const " (?getNumPeople@Order@@QEBAHXZ) already defined in Order.obj
+D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe : fatal error LNK1169: one or more multiply defined symbols found
