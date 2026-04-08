@@ -1,5 +1,4 @@
 #include "Order.h"
-
 Order::Order(int id, OrderType t, int size, int price, int reqTime) {
     this->id = id;
     this->type = t;
