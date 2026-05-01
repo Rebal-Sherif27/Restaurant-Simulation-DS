@@ -71,6 +71,9 @@
     <ClCompile Include="ActionList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Table.h">
@@ -151,23 +154,11 @@
     <ClInclude Include="Restaurant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="RestaurantSim.vcxproj.user">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Restuarant Project.vcxproj">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Restuarant Project.vcxproj.filters">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Stacks_Queues.sln">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Stacks_Queues.v11.suo">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="README.md">
       <Filter>Header Files</Filter>
     </None>

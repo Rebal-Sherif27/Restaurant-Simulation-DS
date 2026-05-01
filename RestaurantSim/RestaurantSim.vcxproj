@@ -147,6 +147,7 @@
     <ClCompile Include="RestaurantSim.cpp" />
     <ClCompile Include="Scooter.cpp" />
     <ClCompile Include="Table.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.h" />
@@ -175,14 +176,10 @@
     <ClInclude Include="Scooter.h" />
     <ClInclude Include="StackADT.h" />
     <ClInclude Include="Table.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="RestaurantSim.vcxproj.user" />
-    <None Include="Restuarant Project.vcxproj" />
-    <None Include="Restuarant Project.vcxproj.filters" />
-    <None Include="Stacks_Queues.sln" />
-    <None Include="Stacks_Queues.v11.suo" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

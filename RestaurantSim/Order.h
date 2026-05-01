@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-
 using namespace std;
 
 enum OrderType {
@@ -9,7 +8,6 @@ enum OrderType {
 
 class Order {
 public:
-    // Declaration ONLY - ends with a semicolon
     int getNumPeople() const;
 
     int id;
@@ -21,6 +19,11 @@ public:
     int duration;
     bool canShare;
     int distance;
+
+    // ADDED FOR TRACKING
+    int finishTime;
+    int resourceID;
+    string resourceType;
 
     Order(int id, OrderType t, int size, int price, int reqTime);
     ~Order();
