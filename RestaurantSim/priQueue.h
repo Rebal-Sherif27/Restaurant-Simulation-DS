@@ -19,6 +19,21 @@ public:
         while (dequeue(tmp, p));
     }
 
+    // Inside priQueue class in priQueue.h
+    void printIDs() const {
+        priNode<T>* curr = head;
+        if (!curr) {
+            cout << "None";
+            return;
+        }
+        while (curr) {
+            int p;
+            T item = curr->getItem(p); // item is Order*
+            if (item) cout << item->id << " ";
+            curr = curr->getNext();
+        }
+    }
+
     void enqueue(const T& data, int priority) 
     {
         priNode<T>* newNode = new priNode<T>(data, priority);

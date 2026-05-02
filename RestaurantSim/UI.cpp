@@ -3,7 +3,11 @@
 #include <conio.h>
 using namespace std;
 
-void UI::PrintPhase1Screen(int timestep)
+void UI::PrintPhase1Screen(int timestep,
+    Queue<Order*>* pending,
+    Queue<Order*>* ready,
+    priQueue<Order*>* service,
+    Queue<Order*>* finished)
 {
     system("cls");
 
@@ -11,22 +15,25 @@ void UI::PrintPhase1Screen(int timestep)
     cout << "Current Timestep: " << timestep << endl;
     cout << "--------------------------------------------------------" << endl;
 
-    cout << endl << "[Pending orders]" << endl;
-    cout << endl << "[Available Chefs]" << endl;
-    cout << endl << "[Cooking orders]" << endl;
-    cout << endl << "[Ready orders]" << endl;
-    cout << endl << "[In-Service Orders]" << endl;
-    cout << endl << "[Finished orders]" << endl;
-    cout << endl << "[Cancelled orders]" << endl;
-    cout << endl << "[Scooters]" << endl;
-    cout << endl << "[Tables]" << endl;
-    cout << endl << "[Maintenance]" << endl;}
+    cout << endl << "[Pending orders]: ";
+    pending->printIDs();
+
+    cout << endl << "[Ready orders]: ";
+    ready->printIDs();
+
+    cout << endl << "[In-Service Orders]: ";
+    service->printIDs(); // We'll add this to priQueue.h in a second
+
+    cout << endl << "[Finished orders]: ";
+    finished->printIDs();
+
+    // ... add the rest similarly ...
+}
 
 void UI::WaitForKey()
 {
-    cout << endl;
-    cout << "Press any key to move to next step..." << endl;
-    _getch();
+    std::cout << std::endl << "Press any key to move to next step..." << std::endl;
+    (void)_getch(); // The (void) cast tells the compiler you are intentionally ignoring it.
 }
 
 int UI::getMode() {
@@ -37,3 +44,4 @@ int UI::getMode() {
     cin >> choice;
     return choice;
 }
+

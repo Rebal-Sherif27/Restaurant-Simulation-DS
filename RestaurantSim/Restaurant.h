@@ -59,7 +59,7 @@ bool RemoveFromPendingOVC(int id);
 bool RemoveFromCookingOVC(int id);
 bool RemoveFromReadyOVC(int id);
 void ReleaseChefFromOrder(int id);
-
+void FreeFinishedTables(int timestep);
 void AssignTable(int timestep);
 
 };

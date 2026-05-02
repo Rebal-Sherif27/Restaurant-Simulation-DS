@@ -7,9 +7,8 @@ enum OrderType {
 };
 
 class Order {
+    int tableID = -1; // Keep this private
 public:
-    int getNumPeople() const;
-
     int id;
     OrderType type;
     int size;
@@ -19,13 +18,18 @@ public:
     int duration;
     bool canShare;
     int distance;
-    int getSize() const { return size; }
 
-    // ADDED FOR TRACKING
+    // Tracking Data
     int finishTime;
     int resourceID;
     string resourceType;
 
     Order(int id, OrderType t, int size, int price, int reqTime);
     ~Order();
+
+    // Getters
+    int getNumPeople() const;
+    int getTableID() const { return tableID; }
+    int getFinishTime() const { return finishTime; }
+    int getSize() const { return size; }
 };

@@ -15,7 +15,7 @@ Table::Table(int id, int cap, bool sharable)
 
 void Table::assignorder(Order* neworder) {
     currentorder = neworder;
-    currentload = neworder->getNumPeople();
+    currentload += neworder->getNumPeople();
 }
 
 void Table::freeTable() {
