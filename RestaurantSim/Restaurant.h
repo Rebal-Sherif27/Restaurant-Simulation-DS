@@ -6,6 +6,8 @@
 #include "Queue.h"
 #include "priQueue.h"
 #include "CookingQueue.h"
+#include "UI.h"
+#include "Table.h"
 
 class UI;
 
@@ -21,6 +23,11 @@ private:
     priQueue<Scooter*>* freeScooters;
     priQueue<Scooter*>* backScooters;
     Queue<Scooter*>* maintScooters;
+
+    Queue<Table*>* freeTables;
+    Queue<Table*>* reservedTables;
+	Queue<Table*>* sharableTables;
+	Queue<Table*>* occupiedTables;
 
     UI* pUI;
 public:
@@ -52,6 +59,8 @@ bool RemoveFromPendingOVC(int id);
 bool RemoveFromCookingOVC(int id);
 bool RemoveFromReadyOVC(int id);
 void ReleaseChefFromOrder(int id);
+
+void AssignTable(int timestep);
 
 };
 #endif

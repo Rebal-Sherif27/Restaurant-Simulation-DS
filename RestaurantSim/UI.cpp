@@ -28,3 +28,12 @@ void UI::WaitForKey()
     cout << "Press any key to move to next step..." << endl;
     _getch();
 }
+
+int UI::getMode() {
+    int choice;
+    cout << "Select Simulation Mode:" << endl;
+    cout << "1. Interactive Mode - 2. Step-by-Step Mode - 3. Silent Mode" << endl;
+    cout << "Enter your choice (1-3): ";
+    cin >> choice;
+    return choice;
+}

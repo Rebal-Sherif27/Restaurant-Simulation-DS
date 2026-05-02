@@ -19,6 +19,7 @@ public:
     int duration;
     bool canShare;
     int distance;
+    int getSize() const { return size; }
 
     // ADDED FOR TRACKING
     int finishTime;

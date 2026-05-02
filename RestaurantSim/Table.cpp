@@ -3,12 +3,14 @@
 
 using namespace std;
 
-Table::Table(int id, int cap, bool sharable) {
-    tabelID = id;
-    capacity = cap;
-    issharabel = sharable;
-    currentload = 0;
-    currentorder = nullptr;
+Table::Table(int id, int cap, bool sharable)
+    : tabelID(id)
+    , capacity(cap)
+    , currentload(0)
+    , issharable(sharable)
+    , currentorder(nullptr)
+    , isReserved(false)
+{
 }
 
 void Table::assignorder(Order* neworder) {
@@ -24,5 +26,25 @@ void Table::freeTable() {
 }
 
 void Table::setSharable(bool status) {
-    issharabel = status;
+    issharable = status;
+}
+
+int Table::getCapacity() const {
+    return capacity;
+}
+
+int Table::getCurrentload() const {
+    return currentload;
+}
+
+bool Table::isSharable() const {
+    return issharable;
+}
+
+int Table::getTabelID() const {
+    return tabelID;
+}
+
+void Table::setCurrentload(int load) {
+    currentload = load;
 }
