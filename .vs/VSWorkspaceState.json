@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\RestaurantSim",
-    "\\RestaurantSim\\x64\\Debug"
+    "\\1-Stacks",
+    "\\2-Passing_Stack",
+    "\\3-Queues",
+    "\\4-Passing_Queue"
   ],
-  "SelectedNode": "\\MaintScooters.h",
   "PreviewInSolutionExplorer": false
 }

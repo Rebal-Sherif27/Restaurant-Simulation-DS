@@ -8,16 +8,27 @@
 #include "CookingQueue.h"
 #include "UI.h"
 #include "Table.h"
+#include "Action.h"   // added
 
 class UI;
 
 class Restaurant {
 private:
-    Queue<Order*>* pendingOrders;     
-    CookingQueue* cookingOrders;      
-    Queue<Order*>* readyOrders;        
-    priQueue<Order*>* inServiceOrders; 
-    Queue<Order*>* finishedOrders;   
+    // --- Your new action and pending lists ---
+    Queue<Action*>* actionsList;
+    Queue<Order*>* pendingODG;
+    Queue<Order*>* pendingODN;
+    Queue<Order*>* pendingOT;
+    Queue<Order*>* pendingOVG;
+    Queue<Order*>* pendingOVC;
+    Queue<Order*>* pendingOVN;
+
+    // --- Existing lists (kept) ---
+    Queue<Order*>* pendingOrders;      // kept for compatibility (may be unused later)
+    CookingQueue* cookingOrders;
+    Queue<Order*>* readyOrders;
+    priQueue<Order*>* inServiceOrders;
+    Queue<Order*>* finishedOrders;
     Queue<Order*>* cancelledOrders;
 
     priQueue<Scooter*>* freeScooters;
@@ -26,42 +37,52 @@ private:
 
     Queue<Table*>* freeTables;
     Queue<Table*>* reservedTables;
-	Queue<Table*>* sharableTables;
-	Queue<Table*>* occupiedTables;
+    Queue<Table*>* sharableTables;
+    Queue<Table*>* occupiedTables;
 
     UI* pUI;
+
+    // --- New settings from input file ---
+    int TH;   // overwait threshold
+
 public:
     Restaurant();
-~Restaurant();
+    ~Restaurant();
 
-void RunSimulation();
+    void RunSimulation();
 
-Queue<Order*>* getPendingOrders() const { return pendingOrders; }
-CookingQueue* getCookingOrders() const { return cookingOrders; }
-Queue<Order*>* getReadyOrders() const { return readyOrders; }
-priQueue<Order*>* getInServiceOrders() const { return inServiceOrders; }
-Queue<Order*>* getFinishedOrders() const { return finishedOrders; }
-Queue<Order*>* getCancelledOrders() const { return cancelledOrders; }
+    // --- New functions (your Features 2,3,7) ---
+    void LoadFromFile(string filename);
+    void ExecuteActionsAtTime(int currentTime);
+    void CancelOrder(int orderID);
 
-priQueue<Scooter*>* getFreeScooters() const { return freeScooters; }
-priQueue<Scooter*>* getBackScooters() const { return backScooters; }
-Queue<Scooter*>* getMainScooters() const { return maintScooters; }
+    // --- Existing getters (kept) ---
+    Queue<Order*>* getPendingOrders() const { return pendingOrders; }
+    CookingQueue* getCookingOrders() const { return cookingOrders; }
+    Queue<Order*>* getReadyOrders() const { return readyOrders; }
+    priQueue<Order*>* getInServiceOrders() const { return inServiceOrders; }
+    Queue<Order*>* getFinishedOrders() const { return finishedOrders; }
+    Queue<Order*>* getCancelledOrders() const { return cancelledOrders; }
 
-// --- Missing Action Functions ---
-void addPendingODG(Order* pOrd);
-void addPendingODN(Order* pOrd);
-void addPendingOT(Order* pOrd);
-void addPendingOVG(Order* pOrd);
-void addPendingOVC(Order* pOrd);
-void addPendingOVN(Order* pOrd);
+    priQueue<Scooter*>* getFreeScooters() const { return freeScooters; }
+    priQueue<Scooter*>* getBackScooters() const { return backScooters; }
+    Queue<Scooter*>* getMainScooters() const { return maintScooters; }
 
-bool RemoveFromPendingOVC(int id);
-bool RemoveFromCookingOVC(int id);
-bool RemoveFromReadyOVC(int id);
-void ReleaseChefFromOrder(int id);
-void FreeFinishedTables(int timestep);
-void AssignTable(int timestep);
+    // --- Existing action functions (kept) ---
+    void addPendingODG(Order* pOrd);
+    void addPendingODN(Order* pOrd);
+    void addPendingOT(Order* pOrd);
+    void addPendingOVG(Order* pOrd);
+    void addPendingOVC(Order* pOrd);
+    void addPendingOVN(Order* pOrd);
 
+    bool RemoveFromPendingOVC(int id);
+    bool RemoveFromCookingOVC(int id);
+    bool RemoveFromReadyOVC(int id);
+    void ReleaseChefFromOrder(int id);
+    void FreeFinishedTables(int timestep);
+    void AssignTable(int timestep);
 };
+
 #endif
 

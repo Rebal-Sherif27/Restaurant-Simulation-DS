@@ -7,7 +7,7 @@ enum OrderType {
 };
 
 class Order {
-    int tableID = -1; // Keep this private
+    int tableID = -1;
 public:
     int id;
     OrderType type;
@@ -24,10 +24,19 @@ public:
     int resourceID;
     string resourceType;
 
+    // New fields for your features
+    int assignTime;
+    int readyTime;
+    int serviceStartTime;
+
+    // Old constructor (kept for compatibility)
     Order(int id, OrderType t, int size, int price, int reqTime);
+
+    // New constructor (for your RequestAction)
+    Order(int reqTime, int id, OrderType t, int sz, int pr, int st, int dur, bool share, int dist);
+
     ~Order();
 
-    // Getters
     int getNumPeople() const;
     int getTableID() const { return tableID; }
     int getFinishTime() const { return finishTime; }

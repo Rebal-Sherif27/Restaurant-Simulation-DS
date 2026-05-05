@@ -7,22 +7,23 @@ Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
     this->price = prc;
     this->requestTime = reqTime;
 
-    // Initialize defaults from the header
     this->seats = 0;
     this->duration = 0;
     this->canShare = false;
     this->distance = 0;
 
-    // Initialize tracking data
     this->finishTime = 0;
     this->resourceID = -1;
     this->resourceType = "";
     this->tableID = -1;
+
+    // Initialize new fields
+    this->assignTime = -1;
+    this->readyTime = -1;
+    this->serviceStartTime = -1;
 }
 
-Order::~Order() {
-    // Destructor logic (if any)
-}
+Order::~Order() {}
 
 int Order::getNumPeople() const {
     return size;

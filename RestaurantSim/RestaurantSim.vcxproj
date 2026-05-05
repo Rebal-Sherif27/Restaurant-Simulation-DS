@@ -127,7 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionList.cpp" />
+    <ClCompile Include="CancelAction.cpp" />
     <ClCompile Include="Chef.cpp" />
     <ClCompile Include="Cook_Ords.cpp" />
     <ClCompile Include="Fit_Tables.cpp" />
@@ -143,6 +145,7 @@
     <ClCompile Include="RDY_OV.cpp" />
     <ClCompile Include="ReadyOD.cpp" />
     <ClCompile Include="ReadyOT.cpp" />
+    <ClCompile Include="RequestAction.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
     <ClCompile Include="Scooter.cpp" />
@@ -153,6 +156,7 @@
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="ArrayStack.h" />
+    <ClInclude Include="CancelAction.h" />
     <ClInclude Include="Chef.h" />
     <ClInclude Include="CookingQueue.h" />
     <ClInclude Include="Cook_Ords.h" />
@@ -172,6 +176,7 @@
     <ClInclude Include="RDY_OV.h" />
     <ClInclude Include="ReadyOD.h" />
     <ClInclude Include="ReadyOT.h" />
+    <ClInclude Include="RequestAction.h" />
     <ClInclude Include="Restaurant.h" />
     <ClInclude Include="Scooter.h" />
     <ClInclude Include="StackADT.h" />

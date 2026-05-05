@@ -1,2 +1,32 @@
-﻿  Restaurant.cpp
-  RestaurantSim.vcxproj -> D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe
+﻿  Action.cpp
+  ActionList.cpp
+  CancelAction.cpp
+  Chef.cpp
+  Cook_Ords.cpp
+  Fit_Tables.cpp
+  FreeCN.cpp
+  FreeCS.cpp
+  main.cpp
+  MaintScooters.cpp
+  Order.cpp
+  Pend_OVC.cpp
+  priNode.cpp
+  priQueue.cpp
+  Queue.cpp
+  RDY_OV.cpp
+  ReadyOD.cpp
+  ReadyOT.cpp
+  RequestAction.cpp
+  Restaurant.cpp
+  Generating Code...
+  Compiling...
+  RestaurantSim.cpp
+  Scooter.cpp
+  Table.cpp
+  UI.cpp
+  Generating Code...
+  LINK : C:\Users\Jody Soliman\source\repos\Rebal-Sherif27\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe not found or not built by the last incremental link; performing full link
+CancelAction.obj : error LNK2005: "public: __cdecl CancelAction::CancelAction(int,int)" (??0CancelAction@@QEAA@HH@Z) already defined in ActionList.obj
+CancelAction.obj : error LNK2005: "public: virtual void __cdecl CancelAction::Execute(class Restaurant *)" (?Execute@CancelAction@@UEAAXPEAVRestaurant@@@Z) already defined in ActionList.obj
+RequestAction.obj : error LNK2005: "public: virtual void __cdecl RequestAction::Execute(class Restaurant *)" (?Execute@RequestAction@@UEAAXPEAVRestaurant@@@Z) already defined in ActionList.obj
+C:\Users\Jody Soliman\source\repos\Rebal-Sherif27\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe : fatal error LNK1169: one or more multiply defined symbols found
