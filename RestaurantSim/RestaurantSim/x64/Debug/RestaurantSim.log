@@ -1,83 +1,18 @@
-<<<<<<< HEAD
-﻿  Order.cpp
-<<<<<<< HEAD
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(10,1): error C2059: syntax error: '<<'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(14,1): error C2059: syntax error: '>>'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(32,1): error C2059: syntax error: '<<'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(36,1): error C2143: syntax error: missing ';' before '{'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(36,1): error C2447: '{': missing function header (old-style formal list?)
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(60,1): error C2059: syntax error: '>>'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(61,17): error C2143: syntax error: missing ';' before '{'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(61,17): error C2447: '{': missing function header (old-style formal list?)
+﻿  ActionList.cpp
+  CancelAction.cpp
+  Cook_Ords.cpp
+  Fit_Tables.cpp
+  main.cpp
+  Order.cpp
+  Pend_OVC.cpp
+  RDY_OV.cpp
+  ReadyOD.cpp
+  ReadyOT.cpp
   RequestAction.cpp
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\RequestAction.cpp(25,1): error C2059: syntax error: '<<'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\RequestAction.cpp(27,1): error C2059: syntax error: '=='
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\RequestAction.cpp(28,1): error C2143: syntax error: missing ';' before '}'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\RequestAction.cpp(28,1): error C2059: syntax error: '}'
   Restaurant.cpp
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(142,1): error C2059: syntax error: '<<'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(144,33): error C2143: syntax error: missing ';' before '{'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(201,1): error C2059: syntax error: '=='
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(202,19): error C2143: syntax error: missing ';' before '{'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(217,1): error C2059: syntax error: '>>'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(223,41): error C2143: syntax error: missing ';' before '{'
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(241,18): error C2601: 'Restaurant::addPendingODG': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(242,18): error C2601: 'Restaurant::addPendingODN': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(243,18): error C2601: 'Restaurant::addPendingOT': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(244,18): error C2601: 'Restaurant::addPendingOVG': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(245,18): error C2601: 'Restaurant::addPendingOVC': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(246,18): error C2601: 'Restaurant::addPendingOVN': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(248,18): error C2601: 'Restaurant::RemoveFromPendingOVC': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(267,18): error C2601: 'Restaurant::RemoveFromCookingOVC': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(271,18): error C2601: 'Restaurant::RemoveFromReadyOVC': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(290,18): error C2601: 'Restaurant::ReleaseChefFromOrder': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(295,18): error C2601: 'Restaurant::AssignTable': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(340,18): error C2601: 'Restaurant::FreeFinishedTables': local function definitions are illegal
-      D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34):
-      this line contains a '{' which has not yet been matched
-  
-D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34): error C1075: '{': no matching token found
+  RestaurantSim.cpp
   Restaurant_ChefFlow.cpp
-  Generating Code...
-=======
-  RestaurantSim.vcxproj -> C:\Users\alsaw\Documents\project\RestaurantSim\x64\Debug\RestaurantSim.exe
->>>>>>> bb4d6fd159653a89d9cebe5168ccee5cd848da6e
-=======
-﻿  Restaurant.cpp
+  Table.cpp
   UI.cpp
   Generating Code...
   RestaurantSim.vcxproj -> D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe
->>>>>>> rebal-final-build
