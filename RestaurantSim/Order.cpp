@@ -1,4 +1,5 @@
 #include "Order.h"
+using namespace std;
 
 Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
     this->id = id;
@@ -18,7 +19,7 @@ Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
     this->resourceType = "";
     this->tableID = -1;
 
-    // Initialize new fields
+    // new fields
     this->assignTime = -1;
     this->readyTime = -1;
     this->serviceStartTime = -1;

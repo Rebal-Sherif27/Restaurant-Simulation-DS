@@ -5,8 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <chrono>
-#include <thread>
 using namespace std;
 
 // ==================== CONSTRUCTOR / DESTRUCTOR (merged) ====================
@@ -14,7 +12,7 @@ Restaurant::Restaurant()
     : cookingOrders(new CookingQueue())
     , readyOrders(new Queue<Order*>())
     , inServiceOrders(new priQueue<Order*>())
-    , finishedOrders(new Queue<Order*>())
+    , finishedOrders(new FinishedOrders())
     , cancelledOrders(new Queue<Order*>())
     , freeScooters(new priQueue<Scooter*>())
     , backScooters(new priQueue<Scooter*>())
@@ -25,7 +23,7 @@ Restaurant::Restaurant()
     , sharableTables(new Queue<Table*>())
     , pUI(nullptr)
 {
-    // Your new lists
+    //new lists
     actionsList = new Queue<Action*>();
     pendingODG = new Queue<Order*>();
     pendingODN = new Queue<Order*>();
@@ -35,7 +33,6 @@ Restaurant::Restaurant()
     pendingOVN = new Queue<Order*>();
     TH = 0;
 
-    // Keep old pendingOrders (optional, for backward compatibility)
     pendingOrders = new Queue<Order*>();
 }
 
@@ -59,7 +56,6 @@ Restaurant::~Restaurant() {
     if (pUI) delete pUI;
 }
 
-// ==================== YOUR NEW FUNCTIONS (Features 2,3,7) ====================
 void Restaurant::LoadFromFile(string filename) {
     ifstream file(filename);
     if (!file.is_open()) return;
@@ -130,26 +126,21 @@ void Restaurant::CancelOrder(int orderID) {
     RemoveFromReadyOVC(orderID);
 }
 
-// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
-// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
+// ==================== RUN SIMULATION  ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
-    LoadFromFile("input.txt");   // Feature 2
-
+    LoadFromFile("input.txt");   
     int currentTime = 0;
     bool done = false;
 
     while (!done)
     {
-        ExecuteActionsAtTime(currentTime);   // Feature 3
-        FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
-        AssignTable(currentTime);             // existing function
+        ExecuteActionsAtTime(currentTime);   
+        FreeFinishedTables(currentTime);      
+        AssignTable(currentTime);             
 
-        // Chef assignment and scooter assignment will be added here by Shahd and Ali
-
-
-        // Combine all 6 pending queues into one temporary queue just for the screen
+        
         Queue<Order*> allPendingForUI;
 
         // Helper lambda to copy a queue without emptying the original
@@ -168,14 +159,12 @@ void Restaurant::RunSimulation() {
         copyQueue(pendingOVC); copyQueue(pendingOVN);
 
         if (mode == 1) {
-            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass allPendingForUI.
             pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
             pUI->WaitForKey();
         }
         else if (mode == 2) {
             pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
-            // Sleeps for 1000 milliseconds (1 second) before moving to the next timestep
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            pUI->WaitForKey(); // Just use the normal wait for key instead!
         }
 
         currentTime++;
@@ -188,16 +177,15 @@ void Restaurant::RunSimulation() {
             inServiceOrders->isEmpty()) {
             done = true;
         }
-    } // <--- THE WHILE LOOP ENDS HERE!
+    } // END of whike loop 
 
-    // ALL FINAL CLEANUP HAPPENS EXACTLY ONCE, AFTER THE LOOP IS DONE:
     if (mode == 3) {
         cout << "Silent Mode execution finished. Output file generated." << endl;
     }
 
-    GenerateOutputFile(); // Output is generated
+    GenerateOutputFile(); 
 
-    delete pUI;           // UI is safely deleted
+    delete pUI;           
     pUI = nullptr;
 }
 
@@ -252,10 +240,9 @@ bool Restaurant::RemoveFromReadyOVC(int id) {
 }
 
 void Restaurant::ReleaseChefFromOrder(int id) {
-    // Placeholder – will be implemented by Shahd
 }
 
-// ==================== EXISTING TABLE FUNCTIONS (unchanged) ====================
+// ==================== EXISTING TABLE FUNCTIONS  ====================
 void Restaurant::AssignTable(int timestep) {
     if (readyOrders->isEmpty()) return;
     if (occupiedTables->isEmpty() && freeTables->isEmpty()) return;
@@ -265,7 +252,7 @@ void Restaurant::AssignTable(int timestep) {
     Table* foundTable = nullptr;
     bool isNewTable = false;
 
-    // Search occupied sharable tables
+    // Searchinf for any occupied sharable tables
     Queue<Table*> tempOccupied;
     while (!occupiedTables->isEmpty()) {
         Table* t = occupiedTables->dequeue();
@@ -276,7 +263,7 @@ void Restaurant::AssignTable(int timestep) {
     }
     while (!tempOccupied.isEmpty()) occupiedTables->enqueue(tempOccupied.dequeue());
 
-    // Search free tables
+    // Searchs the free tables
     if (!foundTable) {
         Queue<Table*> tempFree;
         while (!freeTables->isEmpty()) {
@@ -343,7 +330,7 @@ void Restaurant::FreeFinishedTables(int timestep) {
                 occupiedTables->enqueue(tempOccupied.dequeue());
             }
 
-            finishedOrders->enqueue(pOrd);
+            finishedOrders->push(pOrd);
         }
         else {
             break;
@@ -356,16 +343,14 @@ void Restaurant::GenerateOutputFile() {
     ofstream outFile("output.txt");
     if (!outFile.is_open()) return;
 
-    // Print Header
+    // Prints the Header
     outFile << "FT\tID\tAT\tWT\tST\tTAT\n";
 
     int totalOrders = 0;
     double totalWT = 0, totalST = 0, totalTAT = 0;
 
-    // Process all finished orders
     Order* pOrd;
-    while (!finishedOrders->isEmpty()) {
-        pOrd = finishedOrders->dequeue();
+    while (finishedOrders->pop(pOrd)) {
 
         int AT = pOrd->requestTime;
         int ST = pOrd->duration;
@@ -382,7 +367,7 @@ void Restaurant::GenerateOutputFile() {
         totalST += ST;
         totalTAT += TAT;
 
-        delete pOrd; // Free memory now that the simulation is totally done
+        delete pOrd; 
     }
 
     // Print Summary Statistics

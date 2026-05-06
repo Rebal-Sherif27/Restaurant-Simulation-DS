@@ -2,6 +2,7 @@
 #include "Restaurant.h"
 #include "Order.h"
 #include <map>
+using namespace std;
 
 static map<string, OrderType> strToType = {
     {"ODG", ODG}, {"ODN", ODN}, {"OT", OT}, {"OVG", OVG}, {"OVC", OVC}, {"OVN", OVN}

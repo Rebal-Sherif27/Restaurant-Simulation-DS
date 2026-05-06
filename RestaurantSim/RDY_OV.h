@@ -2,9 +2,9 @@
 #include "LinkedQueue.h"
 #include "Order.h"
 
-class RDY_OV :
-	public LinkedQueue < Order* >
+class RDY_OV : public LinkedQueue<Order*>
 {
-    //add function CancelOrder(ID)
+public:
+    // This declares the cancellation function so the .cpp file can use it
+    bool CancelOrder(int id);
 };
-

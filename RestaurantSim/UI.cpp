@@ -3,12 +3,7 @@
 #include <conio.h>
 using namespace std;
 
-void UI::PrintPhase1Screen(int timestep,
-    Queue<Order*>* pending,
-    Queue<Order*>* ready,
-    priQueue<Order*>* service,
-    Queue<Order*>* finished)
-{
+void UI::PrintPhase1Screen(int timestep, Queue<Order*>* pending, Queue<Order*>* ready, priQueue<Order*>* service, FinishedOrders* finished) {
     system("cls");
 
     cout << "----------------- RESTAURANT SIMULATION-----------------" << endl;
@@ -22,18 +17,15 @@ void UI::PrintPhase1Screen(int timestep,
     ready->printIDs();
 
     cout << endl << "[In-Service Orders]: ";
-    service->printIDs(); // We'll add this to priQueue.h in a second
+    service->printIDs();
 
     cout << endl << "[Finished orders]: ";
     finished->printIDs();
-
-    // ... add the rest similarly ...
 }
 
-void UI::WaitForKey()
-{
+void UI::WaitForKey() {
     std::cout << std::endl << "Press any key to move to next step..." << std::endl;
-    (void)_getch(); // The (void) cast tells the compiler you are intentionally ignoring it.
+    (void)_getch();
 }
 
 int UI::getMode() {
@@ -44,4 +36,3 @@ int UI::getMode() {
     cin >> choice;
     return choice;
 }
-
