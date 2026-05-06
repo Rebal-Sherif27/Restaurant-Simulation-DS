@@ -1,4 +1,5 @@
 ﻿  Order.cpp
+<<<<<<< HEAD
 D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(10,1): error C2059: syntax error: '<<'
 D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(14,1): error C2059: syntax error: '>>'
 D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(32,1): error C2059: syntax error: '<<'
@@ -70,3 +71,6 @@ D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSi
 D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Restaurant.cpp(132,34): error C1075: '{': no matching token found
   Restaurant_ChefFlow.cpp
   Generating Code...
+=======
+  RestaurantSim.vcxproj -> C:\Users\alsaw\Documents\project\RestaurantSim\x64\Debug\RestaurantSim.exe
+>>>>>>> bb4d6fd159653a89d9cebe5168ccee5cd848da6e

@@ -128,77 +128,15 @@ void Restaurant::CancelOrder(int orderID) {
     RemoveFromReadyOVC(orderID);
 }
 
-// ==================== RUN SIMULATION (MERGED VERSION) ====================
+// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
+    LoadFromFile("input.txt");   // Feature 2
 
-    // Feature 2: Jody's File Loading (Replaces your hardcoded 500 test orders)
-    LoadFromFile("input.txt");
-
-    int currentTime = 1;
+    int currentTime = 0;
     bool done = false;
 
-<<<<<<< HEAD
-    // Initial screen before loop
-    if (mode == 1 || mode == 2) {
-        // Note: Passing pendingODG as a placeholder for the UI until UI is updated for all queues
-        pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
-        if (mode == 1) pUI->WaitForKey();
-    }
-
-    std::cout << "Running simulation..." << std::endl;
-
-    while (!done) {
-
-        // 1. Execute Actions from File (Jody's Feature 3)
-        ExecuteActionsAtTime(currentTime);
-
-        // 2. Table Management (Your Phase 2 Logic)
-        AssignTable(currentTime);
-        FreeFinishedTables(currentTime);
-
-        // [Chef and scooter assignment will be added here by Shahd and Ali]
-
-        // 3. UI MODES
-        if (mode == 1) // Interactive
-        {
-            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
-            pUI->WaitForKey();
-        }
-        else if (mode == 2) // Step-by-Step
-        {
-            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
-            // Delay logic can be added here
-        }
-
-        // 4. LIVE TELEMETRY (Console Debug Output)
-        std::cout << "Timestep: " << currentTime << std::endl;
-        int inServiceCount = inServiceOrders->GetCount();
-        std::cout << "In-Service orders [order ID, Table ID]" << std::endl;
-
-        std::cout << inServiceCount << " Orders: ";
-        priQueue<Order*> tempQueue;
-        Order* pOrd_print;
-        int pri_print;
-
-        // Dequeue everything to print, moving items to a temp queue
-        while (inServiceOrders->dequeue(pOrd_print, pri_print)) {
-            if (pOrd_print) {
-                std::cout << "[" << pOrd_print->id << ", T:" << pOrd_print->resourceID << "] ";
-            }
-            tempQueue.enqueue(pOrd_print, pri_print);
-        }
-
-        // Restore the original inServiceOrders queue
-        while (tempQueue.dequeue(pOrd_print, pri_print)) {
-            inServiceOrders->enqueue(pOrd_print, pri_print);
-        }
-
-        std::cout << std::endl << "-------------------------------------------" << std::endl;
-
-        // 5. Check if Simulation is done (Merged conditions)
-=======
     while (!done) {
         ExecuteActionsAtTime(currentTime);   // Feature 3
         FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
@@ -214,7 +152,6 @@ void Restaurant::RunSimulation() {
         }
 
         currentTime++;
->>>>>>> 61d3aee0d4f32a99e3d7f92539c3302bf8f288e4
         if (actionsList->isEmpty() &&
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
@@ -223,18 +160,13 @@ void Restaurant::RunSimulation() {
             inServiceOrders->isEmpty()) {
             done = true;
         }
-
-        // 6. Timestep Increment
-        currentTime++;
-        if (currentTime > 500) { done = true; } // Failsafe
-
-    } // <--- WHILE LOOP ENDS HERE
-
-    // 7. Final Message
-    if (mode == 3)
-    {
-        std::cout << "Silent Mode execution finished. Output file generated." << std::endl;
     }
+
+    if (mode == 3) {
+        cout << "Silent Mode execution finished. Output file generated." << endl;
+    }
+    delete pUI;
+    pUI = nullptr;
 }
 
 // ==================== EXISTING FUNCTIONS (kept exactly as you had) ====================
