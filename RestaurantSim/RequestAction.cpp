@@ -11,7 +11,8 @@ RequestAction::RequestAction(int time, string type, int id, int sz, int pr, int 
     : Action(time), orderType(type), orderID(id), size(sz), price(pr), seats(st), duration(dur), canShare(share), distance(dist) {
 }
 
-void RequestAction::Execute(Restaurant* pRest) {
+void RequestAction::Execute(Restaurant* pRest)
+{
     OrderType ot = strToType[orderType];
     Order* o = new Order(actionTime, orderID, ot, size, price, seats, duration, canShare, distance);
 
@@ -21,5 +22,4 @@ void RequestAction::Execute(Restaurant* pRest) {
     else if (orderType == "OVG") pRest->addPendingOVG(o);
     else if (orderType == "OVC") pRest->addPendingOVC(o);
     else if (orderType == "OVN") pRest->addPendingOVN(o);
-}
 }

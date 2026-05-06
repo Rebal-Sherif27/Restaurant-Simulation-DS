@@ -41,4 +41,5 @@ public:
     int getTableID() const { return tableID; }
     int getFinishTime() const { return finishTime; }
     int getSize() const { return size; }
+
 };

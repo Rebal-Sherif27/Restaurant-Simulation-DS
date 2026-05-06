@@ -1,28 +1,29 @@
 #include "Order.h"
 
-Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
+// ADD THIS BELOW YOUR EXISTING CONSTRUCTOR IN ORDER.CPP
+Order::Order(int rTime, int id, OrderType t, int sz, int prc, int st, int dur, bool share, int dist) {
+    this->requestTime = rTime;
     this->id = id;
     this->type = t;
     this->size = sz;
     this->price = prc;
-    this->requestTime = reqTime;
 
-    this->seats = 0;
-    this->duration = 0;
-    this->canShare = false;
-    this->distance = 0;
+    // Parameters from the file
+    this->seats = st;
+    this->duration = dur;
+    this->canShare = share;
+    this->distance = dist;
 
+    // Default tracking data
     this->finishTime = 0;
     this->resourceID = -1;
     this->resourceType = "";
     this->tableID = -1;
 
-    // Initialize new fields
     this->assignTime = -1;
     this->readyTime = -1;
     this->serviceStartTime = -1;
 }
-
 Order::~Order() {}
 
 int Order::getNumPeople() const {

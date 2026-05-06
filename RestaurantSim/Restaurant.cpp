@@ -128,84 +128,51 @@ void Restaurant::CancelOrder(int orderID) {
     RemoveFromReadyOVC(orderID);
 }
 
-// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
+// ==================== RUN SIMULATION (MERGED VERSION) ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
-    LoadFromFile("input.txt");   // Feature 2
 
-    int currentTime = 0;
+    // Feature 2: Jody's File Loading (Replaces your hardcoded 500 test orders)
+    LoadFromFile("input.txt");
+
+    int currentTime = 1;
     bool done = false;
 
-    while (!done) {
-        ExecuteActionsAtTime(currentTime);   // Feature 3
-        FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
-        AssignTable(currentTime);             // existing function
-
-        // Chef assignment and scooter assignment will be added here by Shahd and Ali
-
-<<<<<<< HEAD
-    // --- TEST DATA ---
-    freeTables->enqueue(new Table(1, 4, true));
-    freeTables->enqueue(new Table(2, 2, false));
-    readyOrders->enqueue(new Order(99, OVN, 3, 1, 1));
-
-    for (int i = 1; i <= 500; i++)
-    {
-        Order* newOrder = new Order(i, OVN, 2, 100, 1);
-        pendingOrders->enqueue(newOrder);
+    // Initial screen before loop
+    if (mode == 1 || mode == 2) {
+        // Note: Passing pendingODG as a placeholder for the UI until UI is updated for all queues
+        pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
+        if (mode == 1) pUI->WaitForKey();
     }
 
-    while (!simulationDone)
-    {
-        // 1. Dequeue Pending to Cooking
-        for (int i = 0; i < 30; i++)
+    std::cout << "Running simulation..." << std::endl;
+
+    while (!done) {
+
+        // 1. Execute Actions from File (Jody's Feature 3)
+        ExecuteActionsAtTime(currentTime);
+
+        // 2. Table Management (Your Phase 2 Logic)
+        AssignTable(currentTime);
+        FreeFinishedTables(currentTime);
+
+        // [Chef and scooter assignment will be added here by Shahd and Ali]
+
+        // 3. UI MODES
+        if (mode == 1) // Interactive
         {
-            if (!pendingOrders->isEmpty())
-            {
-                Order* o = pendingOrders->dequeue();
-                int dummyPriority = rand() % 100;
-                cookingOrders->enqueue(o, dummyPriority);
-            }
-        }
-
-        // 2. Cancellation
-        int randomIDToCancel = (rand() % 500) + 1;
-        cookingOrders->CancelOrder(randomIDToCancel);
-
-        // 3. Table Management
-        AssignTable(timestep);
-        FreeFinishedTables(timestep); // Critical: Monitors finish times and frees tables
-
-        // 4. Move to Service (Simulation Logic)
-        if (!cookingOrders->isEmpty()) {
-            int toServiceChance = rand() % 100;
-            if (toServiceChance < 30) {
-                int pri;
-                Order* readyOrder;
-                if (cookingOrders->dequeue(readyOrder, pri)) {
-                    readyOrder->resourceType = (rand() % 2 == 0) ? 'S' : 'T';
-                    readyOrder->resourceID = (rand() % 20) + 1;
-                    readyOrder->finishTime = timestep + 10;
-                    inServiceOrders->enqueue(readyOrder, (100000 - readyOrder->finishTime));
-                }
-            }
-        }
-
-        // 5. UI MODES
-        if (currentMode == 1) // Interactive
-        {
-            pUI->PrintPhase1Screen(timestep, pendingOrders, readyOrders, inServiceOrders, finishedOrders);
+            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
             pUI->WaitForKey();
         }
-        else if (currentMode == 2) // Step-by-Step
+        else if (mode == 2) // Step-by-Step
         {
-            pUI->PrintPhase1Screen(timestep, pendingOrders, readyOrders, inServiceOrders, finishedOrders);
+            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
             // Delay logic can be added here
         }
 
-        // 6. LIVE TELEMETRY (Console Debug Output)
-        std::cout << "Timestep: " << timestep << std::endl;
+        // 4. LIVE TELEMETRY (Console Debug Output)
+        std::cout << "Timestep: " << currentTime << std::endl;
         int inServiceCount = inServiceOrders->GetCount();
         std::cout << "In-Service orders [order ID, Table ID]" << std::endl;
 
@@ -229,33 +196,7 @@ void Restaurant::RunSimulation() {
 
         std::cout << std::endl << "-------------------------------------------" << std::endl;
 
-        // 7. Check if Simulation is done
-        if (pendingOrders->isEmpty() && cookingOrders->isEmpty() &&
-            readyOrders->isEmpty() && inServiceOrders->isEmpty()) {
-            simulationDone = true;
-        }
-
-        // 8. Timestep Increment
-        timestep++;
-        if (timestep > 50) { simulationDone = true; }
-
-    } // <--- WHILE LOOP ENDS HERE
-
-    // 9. Final Message (Outside loop)
-    if (currentMode == 3)
-    {
-        std::cout << "Silent Mode execution finished. Output file generated." << std::endl;
-    }
-} // <--- RUNSIMULATION ENDS HERE
-    
-=======
-        if (mode == 1) {
-            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass pendingODG as placeholder.
-            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
-            pUI->WaitForKey();
-        }
-
-        currentTime++;
+        // 5. Check if Simulation is done (Merged conditions)
         if (actionsList->isEmpty() &&
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
@@ -264,15 +205,19 @@ void Restaurant::RunSimulation() {
             inServiceOrders->isEmpty()) {
             done = true;
         }
-    }
 
-    if (mode == 3) {
-        cout << "Silent Mode execution finished. Output file generated." << endl;
+        // 6. Timestep Increment
+        currentTime++;
+        if (currentTime > 500) { done = true; } // Failsafe
+
+    } // <--- WHILE LOOP ENDS HERE
+
+    // 7. Final Message
+    if (mode == 3)
+    {
+        std::cout << "Silent Mode execution finished. Output file generated." << std::endl;
     }
-    delete pUI;
-    pUI = nullptr;
 }
->>>>>>> 2d6d7bd2aa1ad986f39a4282255e4c02d4c9a6d0
 
 // ==================== EXISTING FUNCTIONS (kept exactly as you had) ====================
 void Restaurant::addPendingODG(Order* pOrd) { pendingODG->enqueue(pOrd); }
