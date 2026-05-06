@@ -28,17 +28,20 @@ Restaurant::~Restaurant() {
     delete maintScooters;
 }
 
-
+// =================================================================
+// TASK 1: Cancellation Logic (Pending, Cooking, Ready)
+// =================================================================
 void Restaurant::cancelOrder(int cancelID) {
     bool found = false;
 
+    // 1. Check Pending Orders
     int size = pendingOrders->getCount();
     for (int i = 0; i < size; i++) {
         Order* temp = pendingOrders->dequeue();
 
-        if (temp->id == cancelID) {
+        if (!found && temp->id == cancelID) {
             cancelledOrders->enqueue(temp);
-            std::cout << "SUCCESS: Order " << cancelID << " cancelled!" << std::endl;
+            std::cout << "[CHECK] SUCCESS: Order " << cancelID << " was cancelled from Pending Queue!" << std::endl;
             found = true;
         }
         else {
@@ -47,13 +50,37 @@ void Restaurant::cancelOrder(int cancelID) {
     }
     if (found) return;
 
+    // 2. Check Cooking Orders
     Order* cancelledCooking = cookingOrders->CancelOrder(cancelID);
     if (cancelledCooking != nullptr) {
         cancelledOrders->enqueue(cancelledCooking);
-        std::cout << "SUCCESS: Order " << cancelID << " cancelled from cooking!" << std::endl;
+        std::cout << "[CHECK] SUCCESS: Order " << cancelID << " was cancelled from Cooking Queue!" << std::endl;
+
+        // ---> TODO for teammate integration: FREE THE CHEF HERE <---
+        // Example: cancelledCooking->assignedChef->setFree(true);
+        found = true;
+    }
+    if (found) return;
+
+    // 3. Check Ready Orders
+    size = readyOrders->getCount();
+    for (int i = 0; i < size; i++) {
+        Order* temp = readyOrders->dequeue();
+
+        if (!found && temp->id == cancelID) {
+            cancelledOrders->enqueue(temp);
+            std::cout << "[CHECK] SUCCESS: Order " << cancelID << " was cancelled from Ready Queue!" << std::endl;
+            found = true;
+        }
+        else {
+            readyOrders->enqueue(temp);
+        }
     }
 }
 
+// =================================================================
+// TASK 2: Output File Logic
+// =================================================================
 void Restaurant::SaveOutputFile(string filename) {
     std::ofstream outFile(filename);
     if (!outFile.is_open()) {
@@ -95,8 +122,8 @@ void Restaurant::SaveOutputFile(string filename) {
 
     outFile << "Avg Wait = " << avgWT << ", Avg Serv = " << avgST << "\n";
     outFile.close();
+    std::cout << "[CHECK] Output file generated successfully as " << filename << std::endl;
 }
-
 
 void Restaurant::RunSimulation()
 {
@@ -104,6 +131,10 @@ void Restaurant::RunSimulation()
     int timestep = 1;
     bool simulationDone = false;
 
+    // =================================================================
+    // TEMPORARY DUMMY DATA (To trigger your checks)
+    // =================================================================
+    // Put an order in Ready and a Scooter in Free
     Order* testOrder = new Order(99, OVG, 1, 50, 1);
     testOrder->distance = 30;
     readyOrders->enqueue(testOrder);
@@ -111,33 +142,85 @@ void Restaurant::RunSimulation()
     Scooter* testScooter = new Scooter(1, 10, 5, 3);
     freeScooters->enqueue(testScooter, testScooter->getSpeed());
 
+    // Put an order in Ready that we will cancel at timestep 2
+    Order* cancelTestOrder = new Order(55, OVC, 2, 100, 1);
+    readyOrders->enqueue(cancelTestOrder);
+    // =================================================================
+
     while (!simulationDone)
     {
+        // Trigger Cancellation Check
+        if (timestep == 2) {
+            std::cout << "\n[Time 2] Attempting to cancel Order 55..." << std::endl;
+            cancelOrder(55);
+        }
+
+        // =================================================================
+        // TASK: Check Returning Scooters (Back -> Free/Maintenance)
+        // =================================================================
         Scooter* returnedScooter;
-        int returnTime;
-        while (backScooters->peek(returnedScooter, returnTime) && (-returnTime) == timestep) {
-            backScooters->dequeue(returnedScooter, returnTime);
+        int returnPri;
+
+        // We use negative return time as priority, so check if top scooter is arriving now
+        while (backScooters->peek(returnedScooter, returnPri) && (-returnPri) == timestep) {
+            backScooters->dequeue(returnedScooter, returnPri);
+
+            std::cout << "[Time " << timestep << "] [CHECK] Scooter " << returnedScooter->getID() << " returned to the restaurant!" << std::endl;
+
             if (returnedScooter->needsMaintenance()) {
                 returnedScooter->setMaintEndTime(timestep + returnedScooter->getMainDur());
                 maintScooters->enqueue(returnedScooter);
+                std::cout << "          -> It needs maintenance! Going to maintScooters until time " << returnedScooter->getMaintEndTime() << std::endl;
             }
             else {
                 freeScooters->enqueue(returnedScooter, returnedScooter->getSpeed());
+                std::cout << "          -> It's good to go! Going back to freeScooters." << std::endl;
             }
         }
 
+        // =================================================================
+        // TASK 3: Process Scooter Maintenance (Maint -> Free)
+        // =================================================================
         while (!maintScooters->isEmpty()) {
             Scooter* frontScooter = maintScooters->peekFront();
             if (frontScooter->getMaintEndTime() == timestep) {
                 maintScooters->dequeue();
                 frontScooter->resetOrderServed();
                 freeScooters->enqueue(frontScooter, frontScooter->getSpeed());
+                std::cout << "[Time " << timestep << "] [CHECK] Scooter " << frontScooter->getID() << " finished maintenance and is back to free scooters!" << std::endl;
             }
             else {
                 break;
             }
         }
 
+        // =================================================================
+        // TASK: Check Finished Deliveries (In-Service -> Finished)
+        // =================================================================
+        Order* finishedOrd;
+        int negFinishTime;
+
+        // Peak at the top of In-Service. Priority is -finishTime.
+        while (inServiceOrders->peek(finishedOrd, negFinishTime) && (-negFinishTime) == timestep) {
+            inServiceOrders->dequeue(finishedOrd, negFinishTime);
+            finishedOrders->enqueue(finishedOrd);
+
+            // Calculate scooter return time and push to backScooters
+            Scooter* s = finishedOrd->assignedScooter;
+            s->increaseOrderServed();
+
+            int returnDuration = (finishedOrd->distance + s->getSpeed() - 1) / s->getSpeed();
+            int returnTime = timestep + returnDuration;
+
+            // Enqueue with negative return time so the earliest returning is at the top!
+            backScooters->enqueue(s, -returnTime);
+
+            std::cout << "[Time " << timestep << "] [CHECK] Order " << finishedOrd->id << " delivered! Scooter " << s->getID() << " is driving back. Will return at Time " << returnTime << std::endl;
+        }
+
+        // =================================================================
+        // TASK 4: Stage 2 Assignments (Ready -> In-Service)
+        // =================================================================
         int readySize = readyOrders->getCount();
         for (int i = 0; i < readySize; i++) {
             Order* pOrd = readyOrders->dequeue();
@@ -153,7 +236,8 @@ void Restaurant::RunSimulation()
                     pOrd->serviceTime = (pOrd->distance + assignedScooter->getSpeed() - 1) / assignedScooter->getSpeed();
                     pOrd->finishTime = timestep + pOrd->serviceTime;
 
-                    std::cout << "[Time " << timestep << "] Order " << pOrd->id << " assigned to Scooter " << assignedScooter->getID() << std::endl;
+                    std::cout << "[Time " << timestep << "] [CHECK] Order " << pOrd->id << " assigned to Scooter " << assignedScooter->getID() << " (Finishing at Time " << pOrd->finishTime << ")" << std::endl;
+
                     inServiceOrders->enqueue(pOrd, -(pOrd->finishTime));
                 }
                 else {
@@ -161,14 +245,16 @@ void Restaurant::RunSimulation()
                 }
             }
             else {
-                readyOrders->enqueue(pOrd); 
+                readyOrders->enqueue(pOrd);
             }
         }
 
-        if (timestep > 100) simulationDone = true;
+        // Stop the simulation after 10 timesteps so we can see the full cycle!
+        if (timestep > 10) simulationDone = true;
         timestep++;
     }
 
+    std::cout << "\n";
     SaveOutputFile("output.txt");
     std::cout << "Simulation finished successfully!" << std::endl;
 }
