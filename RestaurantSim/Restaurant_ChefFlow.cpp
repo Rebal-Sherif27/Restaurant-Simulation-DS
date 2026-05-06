@@ -1,247 +1,175 @@
 #include "Restaurant.h"
-#include<cmath>
+#include <cmath>
 
 using namespace std;
 
 void Restaurant::AssignPendingToChef(int currentTime)
 {
-    // 1. ODG (Only CS Chefs)
     while (!pendingODG->isEmpty() && !freeCS->isEmpty())
     {
-        Order* pOrd = pendingODG->dequeue(); // 0 arguments for Order Queue
-        Chef* pChef;
-        freeCS->dequeue(pChef);              // 1 argument for Chef Queue
+        Order* pOrd = pendingODG->dequeue();
+        Chef* pChef = nullptr;
+
+        freeCS->dequeue(pChef);
 
         pOrd->assignedChef = pChef;
         pOrd->assignTime = currentTime;
-        int cookTime = (pOrd->size + pChef->GetSpeed() - 1) / pChef->GetSpeed();
+
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
         pOrd->readyTime = currentTime + cookTime;
 
-        // Priority Queue needs 2 arguments: the order and the priority value
         cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
     }
 
-<<<<<<< HEAD
-    // 2. ODN (CN then CS)
     while (!pendingODN->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
     {
         Order* pOrd = pendingODN->dequeue();
         Chef* pChef = nullptr;
 
-        if (!freeCN->isEmpty()) freeCN->dequeue(pChef);
-        else freeCS->dequeue(pChef);
+        if (!freeCN->isEmpty())
+            freeCN->dequeue(pChef);
+        else
+            freeCS->dequeue(pChef);
 
         pOrd->assignedChef = pChef;
         pOrd->assignTime = currentTime;
-        int cookTime = (pOrd->size + pChef->GetSpeed() - 1) / pChef->GetSpeed();
+
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
         pOrd->readyTime = currentTime + cookTime;
+
         cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
     }
 
-    // 3. OT (Only CN)
     while (!pendingOT->isEmpty() && !freeCN->isEmpty())
     {
         Order* pOrd = pendingOT->dequeue();
-        Chef* pChef;
+        Chef* pChef = nullptr;
+
         freeCN->dequeue(pChef);
 
         pOrd->assignedChef = pChef;
         pOrd->assignTime = currentTime;
-        int cookTime = (pOrd->size + pChef->GetSpeed() - 1) / pChef->GetSpeed();
+
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
         pOrd->readyTime = currentTime + cookTime;
+
         cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
     }
 
-    // 4. OVG (Only CS)
     while (!pendingOVG->isEmpty() && !freeCS->isEmpty())
     {
         Order* pOrd = pendingOVG->dequeue();
-        Chef* pChef;
+        Chef* pChef = nullptr;
+
         freeCS->dequeue(pChef);
 
         pOrd->assignedChef = pChef;
         pOrd->assignTime = currentTime;
-        int cookTime = (pOrd->size + pChef->GetSpeed() - 1) / pChef->GetSpeed();
+
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
         pOrd->readyTime = currentTime + cookTime;
+
         cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
     }
 
-    // 5. OVC & 6. OVN (CN then CS)
-    Queue<Order*>* extraQueues[] = { pendingOVC, pendingOVN };
-    for (int i = 0; i < 2; i++) {
-        while (!extraQueues[i]->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty())) {
-            Order* pOrd = extraQueues[i]->dequeue();
-            Chef* pChef = nullptr;
-            if (!freeCN->isEmpty()) freeCN->dequeue(pChef);
-            else freeCS->dequeue(pChef);
+    while (!pendingOVC->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
+    {
+        Order* pOrd = pendingOVC->dequeue();
+        Chef* pChef = nullptr;
 
-            pOrd->assignedChef = pChef;
-            pOrd->assignTime = currentTime;
-            int cookTime = (pOrd->size + pChef->GetSpeed() - 1) / pChef->GetSpeed();
-            pOrd->readyTime = currentTime + cookTime;
-            cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
-=======
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
+        if (!freeCN->isEmpty())
+            freeCN->dequeue(pChef);
+        else
+            freeCS->dequeue(pChef);
 
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
-        }
+        pOrd->assignedChef = pChef;
+        pOrd->assignTime = currentTime;
 
-        while (!pendingODN->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
-        {
-            Order* order = pendingODN->dequeue();
-            Chef* chef;
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
+        pOrd->readyTime = currentTime + cookTime;
 
-            if (!freeCN->isEmpty())
-                chef = freeCN->dequeue();
-            else
-                chef = freeCS->dequeue();
+        cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
+    }
 
-            order->assignedChef = chef;
-            order->assignTime = currentTime;
+    while (!pendingOVN->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
+    {
+        Order* pOrd = pendingOVN->dequeue();
+        Chef* pChef = nullptr;
 
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
+        if (!freeCN->isEmpty())
+            freeCN->dequeue(pChef);
+        else
+            freeCS->dequeue(pChef);
 
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
-        }
+        pOrd->assignedChef = pChef;
+        pOrd->assignTime = currentTime;
 
-        while (!pendingOT->isEmpty() && !freeCN->isEmpty())
-        {
-            Order* order = pendingOT->dequeue();
-            Chef* chef = freeCN->dequeue();
+        int cookTime = ceil((double)pOrd->size / pChef->GetSpeed());
+        pOrd->readyTime = currentTime + cookTime;
 
-            order->assignedChef = chef;
-            order->assignTime = currentTime;
-
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
-
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
-        }
-
-        while (!pendingOVG->isEmpty() && !freeCS->isEmpty())
-        {
-            Order* order = pendingOVG->dequeue();
-            Chef* chef = freeCS->dequeue();
-
-            order->assignedChef = chef;
-            order->assignTime = currentTime;
-
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
-
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
-        }
-
-        while (!pendingOVC->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
-        {
-            Order* order = pendingOVC->dequeue();
-            Chef* chef;
-
-            if (!freeCN->isEmpty())
-                chef = freeCN->dequeue();
-            else
-                chef = freeCS->dequeue();
-
-            order->assignedChef = chef;
-            order->assignTime = currentTime;
-
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
-
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
-        }
-
-        while (!pendingOVN->isEmpty() && (!freeCN->isEmpty() || !freeCS->isEmpty()))
-        {
-            Order* order = pendingOVN->dequeue();
-            Chef* chef;
-
-            if (!freeCN->isEmpty())
-                chef = freeCN->dequeue();
-            else
-                chef = freeCS->dequeue();
-
-            order->assignedChef = chef;
-            order->assignTime = currentTime;
-
-            int cookTime = ceil((double)order->size / chef->GetSpeed());
-            order->readyTime = currentTime + cookTime;
-
-            cookingOrders->enqueue(order, 100000 - order->readyTime);
->>>>>>> shahd-chef-flow-phase2
-        }
+        cookingOrders->enqueue(pOrd, 100000 - pOrd->readyTime);
     }
 }
 
-<<<<<<< HEAD
-void Restaurant::MoveCookingToReady(int currentTime) {}
-void Restaurant::FinalizeTakeawayOrders(int currentTime) {}
-=======
-
 void Restaurant::MoveCookingToReady(int currentTime)
 {
-   
-        Order* order = nullptr;
-        int priority;
+    Order* pOrd = nullptr;
+    int priority;
 
-        while (cookingOrders->peek(order, priority))
+    while (cookingOrders->peek(pOrd, priority))
+    {
+        if (pOrd == nullptr)
+            break;
+
+        if (pOrd->readyTime > currentTime)
+            break;
+
+        cookingOrders->dequeue(pOrd, priority);
+
+        if (pOrd->assignedChef != nullptr)
         {
-            if (order == nullptr)
-                break;
-
-            if (order->readyTime > currentTime)
-                break;
-
-            cookingOrders->dequeue(order, priority);
-
-            if (order->assignedChef != nullptr)
+            if (pOrd->assignedChef->GetType() == CS)
             {
-                if (order->assignedChef->GetType() == CS)
-                {
-                    freeCS->enqueue(order->assignedChef);
-                }
-                else
-                {
-                    freeCN->enqueue(order->assignedChef);
-                }
-
-                order->assignedChef = nullptr;
-            }
-
-            if (order->type == ODG || order->type == ODN)
-            {
-                readyDineIn->enqueue(order);
-            }
-            else if (order->type == OT)
-            {
-                readyTakeaway->enqueue(order);
+                freeCS->enqueue(pOrd->assignedChef);
             }
             else
             {
-                readyDelivery->enqueue(order);
+                freeCN->enqueue(pOrd->assignedChef);
             }
+
+            pOrd->assignedChef = nullptr;
         }
-    
+
+        if (pOrd->type == ODG || pOrd->type == ODN)
+        {
+            readyDineIn->enqueue(pOrd);
+        }
+        else if (pOrd->type == OT)
+        {
+            readyTakeaway->enqueue(pOrd);
+        }
+        else
+        {
+            readyDelivery->enqueue(pOrd);
+        }
+    }
 }
 
 void Restaurant::FinalizeTakeawayOrders(int currentTime)
 {
-    
-        while (!readyTakeaway->isEmpty())
+    while (!readyTakeaway->isEmpty())
+    {
+        Order* pOrd = readyTakeaway->peekFront();
+
+        if (currentTime < pOrd->readyTime + 1)
         {
-            Order* order = readyTakeaway->peekFront();
-
-            if (currentTime < order->readyTime + 1)
-            { break;}
-
-            order = readyTakeaway->dequeue();
-
-            order->finishTime = currentTime;
-
-            finishedOrders->enqueue(order);
+            break;
         }
-    
+
+        pOrd = readyTakeaway->dequeue();
+
+        pOrd->finishTime = currentTime;
+
+        finishedOrders->push(pOrd);
+    }
 }
->>>>>>> shahd-chef-flow-phase2

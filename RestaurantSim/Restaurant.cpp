@@ -39,9 +39,6 @@ Restaurant::Restaurant()
     pendingOVG = new Queue<Order*>();
     pendingOVC = new Queue<Order*>();
     pendingOVN = new Queue<Order*>();
-    freeCN = new FreeCN();
-    freeCS = new FreeCS();
-    maintScooters = new MaintScooters();
     TH = 0;
 
     pendingOrders = new Queue<Order*>();
@@ -162,11 +159,13 @@ void Restaurant::RunSimulation() {
         Queue<Order*>* sources[] = { pendingODG, pendingODN, pendingOT, pendingOVG, pendingOVC, pendingOVN };
 
         for (int i = 0; i < 6; i++) {
+            Queue<Order*> temp; // MOVE THIS HERE
             while (!sources[i]->isEmpty()) {
                 Order* o = sources[i]->dequeue();
                 allPendingForUI.enqueue(o);
                 temp.enqueue(o);
             }
+            
             while (!temp.isEmpty()) {
                 sources[i]->enqueue(temp.dequeue());
             }
@@ -213,8 +212,9 @@ void Restaurant::addPendingOVC(Order* pOrd) { pendingOVC->enqueue(pOrd); }
 void Restaurant::addPendingOVN(Order* pOrd) { pendingOVN->enqueue(pOrd); }
 
 bool Restaurant::RemoveFromPendingOVC(int id) {
-    Queue<Order*> temp;
+    Queue<Order*> temp; // Declaring temp
     bool found = false;
+
     while (!pendingOVC->isEmpty()) {
         Order* o = pendingOVC->dequeue();
         if (o->id == id) {
@@ -225,12 +225,12 @@ bool Restaurant::RemoveFromPendingOVC(int id) {
             temp.enqueue(o);
         }
     }
+
     while (!temp.isEmpty()) {
         pendingOVC->enqueue(temp.dequeue());
     }
     return found;
 }
-
 bool Restaurant::RemoveFromCookingOVC(int id) {
     return cookingOrders->CancelOrder(id);
 }
