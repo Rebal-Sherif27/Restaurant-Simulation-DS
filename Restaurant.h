@@ -6,6 +6,7 @@
 #include "Queue.h"
 #include "priQueue.h"
 #include "CookingQueue.h"
+#include <string>
 
 class UI;
 
@@ -39,6 +40,8 @@ Queue<Order*>* getCancelledOrders() const { return cancelledOrders; }
 priQueue<Scooter*>* getFreeScooters() const { return freeScooters; }
 priQueue<Scooter*>* getBackScooters() const { return backScooters; }
 Queue<Scooter*>* getMainScooters() const { return maintScooters; }
+void cancelOrder(int cancelID);
+void SaveOutputFile(string filename);
 };
 #endif
 

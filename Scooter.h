@@ -9,7 +9,8 @@ private:
 	int	Speed;            //speed of the scooter in meters/timestep
 	int Main_Dur;         // Maintenanace duration 
 	int Main_Ords;        //The number of orders before maintenanace is needed
-	int	OrderServed;      //How many orders it has delivered so far
+	int	OrderServed;  //How many orders it has delivered so far
+	int maintEndTime;
 public:
 	//Constructors:
 	Scooter();
@@ -31,6 +32,9 @@ public:
 	bool needsMaintenance() const; 
 
 	void print() const;
+
+	void setMaintEndTime(int time);
+	int getMaintEndTime() const;
 
 
 };

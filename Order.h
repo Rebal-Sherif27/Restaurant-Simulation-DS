@@ -12,6 +12,7 @@
         OVN   // delivery normal
     };
 
+    class Scooter;
     class Order {
     public:
         int id;
@@ -19,6 +20,12 @@
         int size;
         int price;
         int requestTime;
+
+        int waitTime;
+		int serviceTime;
+		int finishTime;
+
+		Scooter * assignedScooter; // Pointer to the scooter assigned to this order (if any)
 
         // For dine-in only
         int seats;

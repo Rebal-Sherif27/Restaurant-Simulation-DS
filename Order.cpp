@@ -9,6 +9,10 @@ Order::Order(int id, OrderType t, int size, int price, int reqTime) {
     duration = 0;
     canShare = false;
     distance = 0;
+    waitTime = 0;
+    serviceTime = 0;
+    finishTime = 0;
+	assignedScooter = nullptr;
 }
 
 Order::~Order() {}
