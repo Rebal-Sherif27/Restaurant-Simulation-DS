@@ -1,18 +1,13 @@
-﻿  ActionList.cpp
-  CancelAction.cpp
-  Cook_Ords.cpp
-  Fit_Tables.cpp
-  main.cpp
-  Order.cpp
-  Pend_OVC.cpp
-  RDY_OV.cpp
-  ReadyOD.cpp
-  ReadyOT.cpp
-  RequestAction.cpp
-  Restaurant.cpp
-  RestaurantSim.cpp
-  Restaurant_ChefFlow.cpp
-  Table.cpp
+﻿  Restaurant_ChefFlow.cpp
   UI.cpp
   Generating Code...
+Action.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Action.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+Chef.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Chef.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+FreeCN.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FreeCN.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+FreeCS.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'FreeCS.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+MaintScooters.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'MaintScooters.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+priNode.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'priNode.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+priQueue.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'priQueue.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+Queue.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Queue.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
+Scooter.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'Scooter.obj' or at 'D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\vc143.pdb'; linking object as if no debug info
   RestaurantSim.vcxproj -> D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe

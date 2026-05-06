@@ -5,6 +5,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "FreeCN.h"
+#include "FreeCS.h"
+#include "MaintScooters.h"
 using namespace std;
 
 // ==================== CONSTRUCTOR / DESTRUCTOR (merged) ====================
@@ -13,10 +16,12 @@ Restaurant::Restaurant()
     , readyOrders(new Queue<Order*>())
     , inServiceOrders(new priQueue<Order*>())
     , finishedOrders(new FinishedOrders())
+    , freeCN(new FreeCN())                
+    , freeCS(new FreeCS())                
+    , maintScooters(new MaintScooters())
     , cancelledOrders(new Queue<Order*>())
     , freeScooters(new priQueue<Scooter*>())
     , backScooters(new priQueue<Scooter*>())
-    , maintScooters(new Queue<Scooter*>())
     , freeTables(new Queue<Table*>())
     , occupiedTables(new Queue<Table*>())
     , reservedTables(new Queue<Table*>())
@@ -31,6 +36,9 @@ Restaurant::Restaurant()
     pendingOVG = new Queue<Order*>();
     pendingOVC = new Queue<Order*>();
     pendingOVN = new Queue<Order*>();
+    freeCN = new FreeCN();
+    freeCS = new FreeCS();
+    maintScooters = new MaintScooters();
     TH = 0;
 
     pendingOrders = new Queue<Order*>();
@@ -144,19 +152,20 @@ void Restaurant::RunSimulation() {
         Queue<Order*> allPendingForUI;
 
         // Helper lambda to copy a queue without emptying the original
-        auto copyQueue = [&](Queue<Order*>* source) {
-            Queue<Order*> temp;
-            while (!source->isEmpty()) {
-                Order* o = source->dequeue();
+        Queue<Order*> temp;
+        Queue<Order*>* sources[] = { pendingODG, pendingODN, pendingOT, pendingOVG, pendingOVC, pendingOVN };
+
+        for (int i = 0; i < 6; i++) {
+            while (!sources[i]->isEmpty()) {
+                Order* o = sources[i]->dequeue();
                 allPendingForUI.enqueue(o);
                 temp.enqueue(o);
             }
-            while (!temp.isEmpty()) source->enqueue(temp.dequeue());
-            };
+            while (!temp.isEmpty()) {
+                sources[i]->enqueue(temp.dequeue());
+            }
+        }
 
-        copyQueue(pendingODG); copyQueue(pendingODN);
-        copyQueue(pendingOT);  copyQueue(pendingOVG);
-        copyQueue(pendingOVC); copyQueue(pendingOVN);
 
         if (mode == 1) {
             pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);

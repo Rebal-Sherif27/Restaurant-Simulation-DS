@@ -11,6 +11,9 @@
 #include "Table.h"
 #include "Action.h"   
 #include "Chef.h"
+#include "FreeCN.h"
+#include "FreeCS.h"
+#include "MaintScooters.h"
 class UI;
 
 class Restaurant {
@@ -23,21 +26,20 @@ private:
     Queue<Order*>* pendingOVC;
     Queue<Order*>* pendingOVN;
 
-    Queue<Chef*>* freeCS;
-    Queue<Chef*>* freeCN;
+    FreeCN* freeCN;
+    FreeCS* freeCS;
+    MaintScooters* maintScooters;
+    FinishedOrders* finishedOrders;
 
     // --- Existing lists ---
     Queue<Order*>* pendingOrders;      
     CookingQueue* cookingOrders;
     Queue<Order*>* readyOrders;
     priQueue<Order*>* inServiceOrders;
-    FinishedOrders* finishedOrders;
     Queue<Order*>* cancelledOrders;
 
     priQueue<Scooter*>* freeScooters;
     priQueue<Scooter*>* backScooters;
-    Queue<Scooter*>* maintScooters;
-
     Queue<Table*>* freeTables;
     Queue<Table*>* reservedTables;
     Queue<Table*>* sharableTables;
@@ -65,9 +67,9 @@ public:
     FinishedOrders* getFinishedOrders() const { return finishedOrders; }
     Queue<Order*>* getCancelledOrders() const { return cancelledOrders; }
 
-    priQueue<Scooter*>* getFreeScooters() const { return freeScooters; }
-    priQueue<Scooter*>* getBackScooters() const { return backScooters; }
-    Queue<Scooter*>* getMainScooters() const { return maintScooters; }
+    FreeCN* getFreeCN() { return freeCN; }
+    FreeCS* getFreeCS() { return freeCS; }
+    MaintScooters* getMaintScooters() { return maintScooters; }
 
     // --- Existing action functions  ---
     void addPendingODG(Order* pOrd);
