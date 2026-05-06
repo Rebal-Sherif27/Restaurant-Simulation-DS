@@ -5,6 +5,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <thread>
 using namespace std;
 
 // ==================== CONSTRUCTOR / DESTRUCTOR (merged) ====================
@@ -129,6 +131,7 @@ void Restaurant::CancelOrder(int orderID) {
 }
 
 // ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
+// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
@@ -137,7 +140,8 @@ void Restaurant::RunSimulation() {
     int currentTime = 0;
     bool done = false;
 
-    while (!done) {
+    while (!done)
+    {
         ExecuteActionsAtTime(currentTime);   // Feature 3
         FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
         AssignTable(currentTime);             // existing function
@@ -145,13 +149,37 @@ void Restaurant::RunSimulation() {
         // Chef assignment and scooter assignment will be added here by Shahd and Ali
 
 
+        // Combine all 6 pending queues into one temporary queue just for the screen
+        Queue<Order*> allPendingForUI;
+
+        // Helper lambda to copy a queue without emptying the original
+        auto copyQueue = [&](Queue<Order*>* source) {
+            Queue<Order*> temp;
+            while (!source->isEmpty()) {
+                Order* o = source->dequeue();
+                allPendingForUI.enqueue(o);
+                temp.enqueue(o);
+            }
+            while (!temp.isEmpty()) source->enqueue(temp.dequeue());
+            };
+
+        copyQueue(pendingODG); copyQueue(pendingODN);
+        copyQueue(pendingOT);  copyQueue(pendingOVG);
+        copyQueue(pendingOVC); copyQueue(pendingOVN);
+
         if (mode == 1) {
-            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass pendingODG as placeholder.
-            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
+            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass allPendingForUI.
+            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
             pUI->WaitForKey();
+        }
+        else if (mode == 2) {
+            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
+            // Sleeps for 1000 milliseconds (1 second) before moving to the next timestep
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
 
         currentTime++;
+
         if (actionsList->isEmpty() &&
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
@@ -160,12 +188,16 @@ void Restaurant::RunSimulation() {
             inServiceOrders->isEmpty()) {
             done = true;
         }
-    }
+    } // <--- THE WHILE LOOP ENDS HERE!
 
+    // ALL FINAL CLEANUP HAPPENS EXACTLY ONCE, AFTER THE LOOP IS DONE:
     if (mode == 3) {
         cout << "Silent Mode execution finished. Output file generated." << endl;
     }
-    delete pUI;
+
+    GenerateOutputFile(); // Output is generated
+
+    delete pUI;           // UI is safely deleted
     pUI = nullptr;
 }
 
@@ -262,6 +294,8 @@ void Restaurant::AssignTable(int timestep) {
 
     if (foundTable) {
         readyOrders->dequeue();
+        nextOrder->serviceStartTime = timestep;
+        nextOrder->assignTime = timestep;
         nextOrder->finishTime = timestep + nextOrder->duration;
         inServiceOrders->enqueue(nextOrder, (100000 - nextOrder->finishTime));
         foundTable->assignorder(nextOrder);
@@ -315,4 +349,50 @@ void Restaurant::FreeFinishedTables(int timestep) {
             break;
         }
     }
+}
+
+// ==================== STATISTICS & OUTPUT ====================
+void Restaurant::GenerateOutputFile() {
+    ofstream outFile("output.txt");
+    if (!outFile.is_open()) return;
+
+    // Print Header
+    outFile << "FT\tID\tAT\tWT\tST\tTAT\n";
+
+    int totalOrders = 0;
+    double totalWT = 0, totalST = 0, totalTAT = 0;
+
+    // Process all finished orders
+    Order* pOrd;
+    while (!finishedOrders->isEmpty()) {
+        pOrd = finishedOrders->dequeue();
+
+        int AT = pOrd->requestTime;
+        int ST = pOrd->duration;
+        int FT = pOrd->finishTime;
+
+        int TAT = FT - AT;
+        int WT = TAT - ST;
+
+        outFile << FT << "\t" << pOrd->id << "\t" << AT << "\t"
+            << WT << "\t" << ST << "\t" << TAT << "\n";
+
+        totalOrders++;
+        totalWT += WT;
+        totalST += ST;
+        totalTAT += TAT;
+
+        delete pOrd; // Free memory now that the simulation is totally done
+    }
+
+    // Print Summary Statistics
+    outFile << "-------------------------------------------------------\n";
+    outFile << "Total Orders: " << totalOrders << "\n";
+    if (totalOrders > 0) {
+        outFile << "Avg WT = " << (totalWT / totalOrders) << "\n";
+        outFile << "Avg ST = " << (totalST / totalOrders) << "\n";
+        outFile << "Avg TAT = " << (totalTAT / totalOrders) << "\n";
+    }
+
+    outFile.close();
 }

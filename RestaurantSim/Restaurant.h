@@ -58,6 +58,7 @@ public:
     void LoadFromFile(string filename);
     void ExecuteActionsAtTime(int currentTime);
     void CancelOrder(int orderID);
+    void GenerateOutputFile(); 
 
     // --- Existing getters (kept) ---
     Queue<Order*>* getPendingOrders() const { return pendingOrders; }
