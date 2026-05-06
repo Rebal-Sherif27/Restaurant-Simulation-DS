@@ -1,7 +1,5 @@
 #include "ActionList.h"
 #include "Restaurant.h"
-#include "RequestAction.h"
-#include "CancelAction.h"
 #include <iostream>
 
 ActionList::ActionList() {}
