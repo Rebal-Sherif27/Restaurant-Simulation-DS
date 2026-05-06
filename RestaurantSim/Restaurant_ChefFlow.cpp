@@ -1,4 +1,5 @@
 #include "Restaurant.h"
+#include<cmath>
 
 void Restaurant::AssignPendingToChef(int currentTime)
 {
@@ -11,7 +12,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -30,7 +31,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -44,7 +45,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -58,7 +59,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -77,7 +78,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -96,7 +97,7 @@ void Restaurant::AssignPendingToChef(int currentTime)
             order->assignedChef = chef;
             order->assignTime = currentTime;
 
-            int cookTime = (order->size + chef->GetSpeed() - 1) / chef->GetSpeed();
+            int cookTime = ceil((double)order->size / chef->GetSpeed());
             order->readyTime = currentTime + cookTime;
 
             cookingOrders->enqueue(order, 100000 - order->readyTime);
@@ -106,10 +107,65 @@ void Restaurant::AssignPendingToChef(int currentTime)
 
 void Restaurant::MoveCookingToReady(int currentTime)
 {
-    // Feature 9
+   
+        Order* order = nullptr;
+        int priority;
+
+        while (cookingOrders->peek(order, priority))
+        {
+            if (order == nullptr)
+                break;
+
+            if (order->readyTime > currentTime)
+                break;
+
+            cookingOrders->dequeue(order, priority);
+
+            if (order->assignedChef != nullptr)
+            {
+                if (order->assignedChef->GetType() == CS)
+                {
+                    freeCS->enqueue(order->assignedChef);
+                }
+                else
+                {
+                    freeCN->enqueue(order->assignedChef);
+                }
+
+                order->assignedChef = nullptr;
+            }
+
+            if (order->type == ODG || order->type == ODN)
+            {
+                readyDineIn->enqueue(order);
+            }
+            else if (order->type == OT)
+            {
+                readyTakeaway->enqueue(order);
+            }
+            else
+            {
+                readyDelivery->enqueue(order);
+            }
+        }
+    
 }
 
 void Restaurant::FinalizeTakeawayOrders(int currentTime)
 {
-    // Feature 12
+    
+        while (!readyTakeaway->isEmpty())
+        {
+            Order* order = readyTakeaway->peekFront();
+
+            if (currentTime < order->readyTime + 1)
+            { break;}
+
+            order = readyTakeaway->dequeue();
+
+            order->finishTime = currentTime;
+
+            finishedOrders->enqueue(order);
+        }
+    
 }

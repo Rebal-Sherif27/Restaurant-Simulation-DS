@@ -11,6 +11,9 @@ using namespace std;
 Restaurant::Restaurant()
     : cookingOrders(new CookingQueue())
     , readyOrders(new Queue<Order*>())
+    , readyDineIn(new Queue<Order*>())
+    , readyTakeaway(new Queue<Order*>())
+    , readyDelivery(new Queue<Order*>())
     , inServiceOrders(new priQueue<Order*>())
     , finishedOrders(new Queue<Order*>())
     , cancelledOrders(new Queue<Order*>())
@@ -44,6 +47,9 @@ Restaurant::~Restaurant() {
     delete pendingOrders;
     delete cookingOrders;
     delete readyOrders;
+    delete readyDineIn;
+    delete readyTakeaway;
+    delete readyDelivery;
     delete inServiceOrders;
     delete finishedOrders;
     delete cancelledOrders;

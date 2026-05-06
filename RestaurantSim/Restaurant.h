@@ -30,6 +30,9 @@ private:
     Queue<Order*>* pendingOrders;      // kept for compatibility (may be unused later)
     CookingQueue* cookingOrders;
     Queue<Order*>* readyOrders;
+    Queue<Order*>* readyDineIn;
+    Queue<Order*>* readyTakeaway;
+    Queue<Order*>* readyDelivery;
     priQueue<Order*>* inServiceOrders;
     Queue<Order*>* finishedOrders;
     Queue<Order*>* cancelledOrders;
