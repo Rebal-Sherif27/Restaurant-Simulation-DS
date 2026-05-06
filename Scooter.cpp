@@ -1,10 +1,10 @@
 #include "Scooter.h"
 #include <iostream>
 //consrtuctors:
-Scooter::Scooter() : ID(0), Speed(0), Main_Dur(0), Main_Ords(0), OrderServed(0) {}
+Scooter::Scooter() : ID(0), Speed(0), Main_Dur(0), Main_Ords(0), OrderServed(0), maintEndTime(0) {}
 
 Scooter::Scooter(int id, int speed, int mainDur, int mainOrds)
-	: ID(id), Speed(speed), Main_Dur(mainDur), Main_Ords(mainOrds), OrderServed(0) {}
+	: ID(id), Speed(speed), Main_Dur(mainDur), Main_Ords(mainOrds), OrderServed(0), maintEndTime(0) {}
 
 
 //Getters:
@@ -31,5 +31,7 @@ void Scooter::print() const
 		<< " timesteps, Orders before Maintenance: " << Main_Ords
 		<< ", Orders Served: " << OrderServed << std::endl;
 }
+void Scooter::setMaintEndTime(int time) { maintEndTime = time; }
+int Scooter::getMaintEndTime() const { return maintEndTime; }
 
 
