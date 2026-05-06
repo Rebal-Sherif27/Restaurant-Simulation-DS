@@ -6,6 +6,7 @@ Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
     this->size = sz;
     this->price = prc;
     this->requestTime = reqTime;
+    assignedChef = nullptr;
 
     this->seats = 0;
     this->duration = 0;

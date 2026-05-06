@@ -5,7 +5,7 @@ using namespace std;
 enum OrderType {
     ODG, ODN, OT, OVG, OVC, OVN
 };
-
+class Chef;
 class Order {
     int tableID = -1;
 public:
@@ -18,6 +18,7 @@ public:
     int duration;
     bool canShare;
     int distance;
+    Chef* assignedChef;
 
     // Tracking Data
     int finishTime;
