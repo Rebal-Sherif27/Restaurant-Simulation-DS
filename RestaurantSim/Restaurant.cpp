@@ -12,7 +12,7 @@ Restaurant::Restaurant()
     : cookingOrders(new CookingQueue())
     , readyOrders(new Queue<Order*>())
     , inServiceOrders(new priQueue<Order*>())
-    , finishedOrders(new Queue<Order*>())
+    , finishedOrders(new FinishedOrders())
     , cancelledOrders(new Queue<Order*>())
     , freeScooters(new priQueue<Scooter*>())
     , backScooters(new priQueue<Scooter*>())
@@ -23,7 +23,7 @@ Restaurant::Restaurant()
     , sharableTables(new Queue<Table*>())
     , pUI(nullptr)
 {
-    // Your new lists
+    //new lists
     actionsList = new Queue<Action*>();
     pendingODG = new Queue<Order*>();
     pendingODN = new Queue<Order*>();
@@ -33,7 +33,6 @@ Restaurant::Restaurant()
     pendingOVN = new Queue<Order*>();
     TH = 0;
 
-    // Keep old pendingOrders (optional, for backward compatibility)
     pendingOrders = new Queue<Order*>();
 }
 
@@ -57,7 +56,6 @@ Restaurant::~Restaurant() {
     if (pUI) delete pUI;
 }
 
-// ==================== YOUR NEW FUNCTIONS (Features 2,3,7) ====================
 void Restaurant::LoadFromFile(string filename) {
     ifstream file(filename);
     if (!file.is_open()) return;
@@ -128,30 +126,49 @@ void Restaurant::CancelOrder(int orderID) {
     RemoveFromReadyOVC(orderID);
 }
 
-// ==================== RUN SIMULATION (YOUR NEW VERSION) ====================
+// ==================== RUN SIMULATION  ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
-    LoadFromFile("input.txt");   // Feature 2
-
+    LoadFromFile("input.txt");   
     int currentTime = 0;
     bool done = false;
 
-    while (!done) {
-        ExecuteActionsAtTime(currentTime);   // Feature 3
-        FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
-        AssignTable(currentTime);             // existing function
+    while (!done)
+    {
+        ExecuteActionsAtTime(currentTime);   
+        FreeFinishedTables(currentTime);      
+        AssignTable(currentTime);             
 
-        // Chef assignment and scooter assignment will be added here by Shahd and Ali
+        
+        Queue<Order*> allPendingForUI;
 
+        // Helper lambda to copy a queue without emptying the original
+        auto copyQueue = [&](Queue<Order*>* source) {
+            Queue<Order*> temp;
+            while (!source->isEmpty()) {
+                Order* o = source->dequeue();
+                allPendingForUI.enqueue(o);
+                temp.enqueue(o);
+            }
+            while (!temp.isEmpty()) source->enqueue(temp.dequeue());
+            };
+
+        copyQueue(pendingODG); copyQueue(pendingODN);
+        copyQueue(pendingOT);  copyQueue(pendingOVG);
+        copyQueue(pendingOVC); copyQueue(pendingOVN);
 
         if (mode == 1) {
-            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass pendingODG as placeholder.
-            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
+            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
             pUI->WaitForKey();
+        }
+        else if (mode == 2) {
+            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
+            pUI->WaitForKey(); // Just use the normal wait for key instead!
         }
 
         currentTime++;
+
         if (actionsList->isEmpty() &&
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
@@ -160,12 +177,15 @@ void Restaurant::RunSimulation() {
             inServiceOrders->isEmpty()) {
             done = true;
         }
-    }
+    } // END of whike loop 
 
     if (mode == 3) {
         cout << "Silent Mode execution finished. Output file generated." << endl;
     }
-    delete pUI;
+
+    GenerateOutputFile(); 
+
+    delete pUI;           
     pUI = nullptr;
 }
 
@@ -220,10 +240,9 @@ bool Restaurant::RemoveFromReadyOVC(int id) {
 }
 
 void Restaurant::ReleaseChefFromOrder(int id) {
-    // Placeholder – will be implemented by Shahd
 }
 
-// ==================== EXISTING TABLE FUNCTIONS (unchanged) ====================
+// ==================== EXISTING TABLE FUNCTIONS  ====================
 void Restaurant::AssignTable(int timestep) {
     if (readyOrders->isEmpty()) return;
     if (occupiedTables->isEmpty() && freeTables->isEmpty()) return;
@@ -233,7 +252,7 @@ void Restaurant::AssignTable(int timestep) {
     Table* foundTable = nullptr;
     bool isNewTable = false;
 
-    // Search occupied sharable tables
+    // Searchinf for any occupied sharable tables
     Queue<Table*> tempOccupied;
     while (!occupiedTables->isEmpty()) {
         Table* t = occupiedTables->dequeue();
@@ -244,7 +263,7 @@ void Restaurant::AssignTable(int timestep) {
     }
     while (!tempOccupied.isEmpty()) occupiedTables->enqueue(tempOccupied.dequeue());
 
-    // Search free tables
+    // Searchs the free tables
     if (!foundTable) {
         Queue<Table*> tempFree;
         while (!freeTables->isEmpty()) {
@@ -262,6 +281,8 @@ void Restaurant::AssignTable(int timestep) {
 
     if (foundTable) {
         readyOrders->dequeue();
+        nextOrder->serviceStartTime = timestep;
+        nextOrder->assignTime = timestep;
         nextOrder->finishTime = timestep + nextOrder->duration;
         inServiceOrders->enqueue(nextOrder, (100000 - nextOrder->finishTime));
         foundTable->assignorder(nextOrder);
@@ -309,10 +330,54 @@ void Restaurant::FreeFinishedTables(int timestep) {
                 occupiedTables->enqueue(tempOccupied.dequeue());
             }
 
-            finishedOrders->enqueue(pOrd);
+            finishedOrders->push(pOrd);
         }
         else {
             break;
         }
     }
+}
+
+// ==================== STATISTICS & OUTPUT ====================
+void Restaurant::GenerateOutputFile() {
+    ofstream outFile("output.txt");
+    if (!outFile.is_open()) return;
+
+    // Prints the Header
+    outFile << "FT\tID\tAT\tWT\tST\tTAT\n";
+
+    int totalOrders = 0;
+    double totalWT = 0, totalST = 0, totalTAT = 0;
+
+    Order* pOrd;
+    while (finishedOrders->pop(pOrd)) {
+
+        int AT = pOrd->requestTime;
+        int ST = pOrd->duration;
+        int FT = pOrd->finishTime;
+
+        int TAT = FT - AT;
+        int WT = TAT - ST;
+
+        outFile << FT << "\t" << pOrd->id << "\t" << AT << "\t"
+            << WT << "\t" << ST << "\t" << TAT << "\n";
+
+        totalOrders++;
+        totalWT += WT;
+        totalST += ST;
+        totalTAT += TAT;
+
+        delete pOrd; 
+    }
+
+    // Print Summary Statistics
+    outFile << "-------------------------------------------------------\n";
+    outFile << "Total Orders: " << totalOrders << "\n";
+    if (totalOrders > 0) {
+        outFile << "Avg WT = " << (totalWT / totalOrders) << "\n";
+        outFile << "Avg ST = " << (totalST / totalOrders) << "\n";
+        outFile << "Avg TAT = " << (totalTAT / totalOrders) << "\n";
+    }
+
+    outFile.close();
 }

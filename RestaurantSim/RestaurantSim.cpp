@@ -3,6 +3,7 @@
 #include "Order.h"
 #include "table.h"
 #include "priQueue.h"
+using namespace std;
 // #include "Fit_Tables.h" // Keep this if it contains your assignment logic
 
 using namespace std;

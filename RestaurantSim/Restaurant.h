@@ -1,6 +1,7 @@
 #ifndef RESTAURANT_H
 #define RESTAURANT_H
 
+#include "FinishedOrders.h"
 #include "Order.h"
 #include "Scooter.h"
 #include "Queue.h"
@@ -8,13 +9,12 @@
 #include "CookingQueue.h"
 #include "UI.h"
 #include "Table.h"
-#include "Action.h"   // added
+#include "Action.h"   
 #include "Chef.h"
 class UI;
 
 class Restaurant {
 private:
-    // --- Your new action and pending lists ---
     Queue<Action*>* actionsList;
     Queue<Order*>* pendingODG;
     Queue<Order*>* pendingODN;
@@ -26,12 +26,12 @@ private:
     Queue<Chef*>* freeCS;
     Queue<Chef*>* freeCN;
 
-    // --- Existing lists (kept) ---
-    Queue<Order*>* pendingOrders;      // kept for compatibility (may be unused later)
+    // --- Existing lists ---
+    Queue<Order*>* pendingOrders;      
     CookingQueue* cookingOrders;
     Queue<Order*>* readyOrders;
     priQueue<Order*>* inServiceOrders;
-    Queue<Order*>* finishedOrders;
+    FinishedOrders* finishedOrders;
     Queue<Order*>* cancelledOrders;
 
     priQueue<Scooter*>* freeScooters;
@@ -45,7 +45,6 @@ private:
 
     UI* pUI;
 
-    // --- New settings from input file ---
     int TH;   // overwait threshold
 
 public:
@@ -53,25 +52,24 @@ public:
     ~Restaurant();
 
     void RunSimulation();
-
-    // --- New functions (your Features 2,3,7) ---
     void LoadFromFile(string filename);
     void ExecuteActionsAtTime(int currentTime);
     void CancelOrder(int orderID);
+    void GenerateOutputFile(); 
 
-    // --- Existing getters (kept) ---
+    // --- Existing getters  ---
     Queue<Order*>* getPendingOrders() const { return pendingOrders; }
     CookingQueue* getCookingOrders() const { return cookingOrders; }
     Queue<Order*>* getReadyOrders() const { return readyOrders; }
     priQueue<Order*>* getInServiceOrders() const { return inServiceOrders; }
-    Queue<Order*>* getFinishedOrders() const { return finishedOrders; }
+    FinishedOrders* getFinishedOrders() const { return finishedOrders; }
     Queue<Order*>* getCancelledOrders() const { return cancelledOrders; }
 
     priQueue<Scooter*>* getFreeScooters() const { return freeScooters; }
     priQueue<Scooter*>* getBackScooters() const { return backScooters; }
     Queue<Scooter*>* getMainScooters() const { return maintScooters; }
 
-    // --- Existing action functions (kept) ---
+    // --- Existing action functions  ---
     void addPendingODG(Order* pOrd);
     void addPendingODN(Order* pOrd);
     void addPendingOT(Order* pOrd);

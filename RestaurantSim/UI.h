@@ -2,6 +2,7 @@
 #include "Order.h"
 #include "Queue.h"
 #include "priQueue.h"
+#include "FinishedOrders.h"
 class UI
 {
 public:
@@ -11,5 +12,5 @@ public:
         Queue<Order*>* pending,
         Queue<Order*>* ready,
         priQueue<Order*>* service,
-        Queue<Order*>* finished);
+        FinishedOrders* finished);
 };

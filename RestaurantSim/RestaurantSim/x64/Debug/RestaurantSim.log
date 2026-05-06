@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Order.cpp
 <<<<<<< HEAD
 D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\Order.cpp(10,1): error C2059: syntax error: '<<'
@@ -74,3 +75,9 @@ D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSi
 =======
   RestaurantSim.vcxproj -> C:\Users\alsaw\Documents\project\RestaurantSim\x64\Debug\RestaurantSim.exe
 >>>>>>> bb4d6fd159653a89d9cebe5168ccee5cd848da6e
+=======
+﻿  Restaurant.cpp
+  UI.cpp
+  Generating Code...
+  RestaurantSim.vcxproj -> D:\UNIVERSITY\past projects\Data structure\Restaurant-Simulation-DS\RestaurantSim\x64\Debug\RestaurantSim.exe
+>>>>>>> rebal-final-build
