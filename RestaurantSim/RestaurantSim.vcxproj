@@ -148,6 +148,7 @@
     <ClCompile Include="RequestAction.cpp" />
     <ClCompile Include="Restaurant.cpp" />
     <ClCompile Include="RestaurantSim.cpp" />
+    <ClCompile Include="Restaurant_ChefFlow.cpp" />
     <ClCompile Include="Scooter.cpp" />
     <ClCompile Include="Table.cpp" />
     <ClCompile Include="UI.cpp" />
