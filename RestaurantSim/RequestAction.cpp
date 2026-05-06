@@ -22,4 +22,8 @@ void RequestAction::Execute(Restaurant* pRest)
     else if (orderType == "OVG") pRest->addPendingOVG(o);
     else if (orderType == "OVC") pRest->addPendingOVC(o);
     else if (orderType == "OVN") pRest->addPendingOVN(o);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 61d3aee0d4f32a99e3d7f92539c3302bf8f288e4

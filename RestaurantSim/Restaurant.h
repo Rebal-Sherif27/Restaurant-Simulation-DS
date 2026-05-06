@@ -9,7 +9,7 @@
 #include "UI.h"
 #include "Table.h"
 #include "Action.h"   // added
-
+#include "Chef.h"
 class UI;
 
 class Restaurant {
@@ -22,6 +22,9 @@ private:
     Queue<Order*>* pendingOVG;
     Queue<Order*>* pendingOVC;
     Queue<Order*>* pendingOVN;
+
+    Queue<Chef*>* freeCS;
+    Queue<Chef*>* freeCN;
 
     // --- Existing lists (kept) ---
     Queue<Order*>* pendingOrders;      // kept for compatibility (may be unused later)
@@ -82,6 +85,10 @@ public:
     void ReleaseChefFromOrder(int id);
     void FreeFinishedTables(int timestep);
     void AssignTable(int timestep);
+
+    void AssignPendingToChef(int currentTime);
+    void MoveCookingToReady(int currentTime);
+    void FinalizeTakeawayOrders(int currentTime);
 };
 
 #endif

@@ -139,6 +139,7 @@ void Restaurant::RunSimulation() {
     int currentTime = 1;
     bool done = false;
 
+<<<<<<< HEAD
     // Initial screen before loop
     if (mode == 1 || mode == 2) {
         // Note: Passing pendingODG as a placeholder for the UI until UI is updated for all queues
@@ -197,6 +198,23 @@ void Restaurant::RunSimulation() {
         std::cout << std::endl << "-------------------------------------------" << std::endl;
 
         // 5. Check if Simulation is done (Merged conditions)
+=======
+    while (!done) {
+        ExecuteActionsAtTime(currentTime);   // Feature 3
+        FreeFinishedTables(currentTime);      // Feature 7 (existing function, kept)
+        AssignTable(currentTime);             // existing function
+
+        // Chef assignment and scooter assignment will be added here by Shahd and Ali
+
+
+        if (mode == 1) {
+            // Note: PrintPhase1Screen expects pendingOrders (old). For now we pass pendingODG as placeholder.
+            pUI->PrintPhase1Screen(currentTime, pendingODG, readyOrders, inServiceOrders, finishedOrders);
+            pUI->WaitForKey();
+        }
+
+        currentTime++;
+>>>>>>> 61d3aee0d4f32a99e3d7f92539c3302bf8f288e4
         if (actionsList->isEmpty() &&
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
