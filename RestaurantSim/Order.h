@@ -3,13 +3,16 @@
 using namespace std;
 
 
-enum OrderType {
+enum OrderType 
+{
     ODG, ODN, OT, OVG, OVC, OVN
 };
+
 class Chef;
 class Scooter;
 
-class Order {
+class Order 
+{
     int tableID = -1;
 public:
     int id;

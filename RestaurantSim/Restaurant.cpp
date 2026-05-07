@@ -151,9 +151,15 @@ void Restaurant::CancelOrder(int orderID) {
 }
 
 void Restaurant::RunSimulation() {
-    pUI = new UI();
     int mode = pUI->getMode();
-    LoadFromFile("input.txt");   
+    if (mode == 3)
+    {
+        cout << "Silent Mode..." << endl;
+        cout << "Simulation starts..." << endl;
+    }
+
+    LoadFromFile("input.txt");
+
     int currentTime = 0;
     bool done = false;
 
@@ -171,32 +177,53 @@ void Restaurant::RunSimulation() {
         AssignScooter(currentTime);
 
         
-        Queue<Order*> allPendingForUI;
+        if (mode != 3)
+        {
+            pUI->ClearScreen();
+            pUI->PrintHeader(currentTime);
 
-        Queue<Order*> temp;
-        Queue<Order*>* sources[] = { pendingODG, pendingODN, pendingOT, pendingOVG, pendingOVC, pendingOVN };
+            pUI->PrintSection("Actions List");
+            pUI->PrintActionQueueLine("Remaining Actions", actionsList);
 
-        for (int i = 0; i < 6; i++) {
-            Queue<Order*> temp; 
-            while (!sources[i]->isEmpty()) {
-                Order* o = sources[i]->dequeue();
-                allPendingForUI.enqueue(o);
-                temp.enqueue(o);
-            }
-            
-            while (!temp.isEmpty()) {
-                sources[i]->enqueue(temp.dequeue());
-            }
-        }
+            pUI->PrintSection("Pending Orders");
+            pUI->PrintOrderQueueLine("Pending ODG", pendingODG);
+            pUI->PrintOrderQueueLine("Pending ODN", pendingODN);
+            pUI->PrintOrderQueueLine("Pending OT", pendingOT);
+            pUI->PrintOrderQueueLine("Pending OVG", pendingOVG);
+            pUI->PrintOrderQueueLine("Pending OVC", pendingOVC);
+            pUI->PrintOrderQueueLine("Pending OVN", pendingOVN);
 
+            pUI->PrintSection("Available Chefs");
+            pUI->PrintChefLinkedLine("Free Special Chefs CS", freeCS);
+            pUI->PrintChefLinkedLine("Free Normal Chefs CN", freeCN);
 
-        if (mode == 1) {
-            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
-            pUI->WaitForKey();
-        }
-        else if (mode == 2) {
-            pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
-            pUI->WaitForKey(); 
+            pUI->PrintSection("Cooking Orders");
+            pUI->PrintOrderPriLine("Cooking Orders", cookingOrders);
+
+            pUI->PrintSection("Ready Orders");
+            pUI->PrintOrderQueueLine("Ready Dine-In OD", readyDineIn);
+            pUI->PrintOrderQueueLine("Ready Takeaway OT", readyTakeaway);
+            pUI->PrintOrderQueueLine("Ready Delivery OV", readyDelivery);
+
+            pUI->PrintSection("Tables");
+            pUI->PrintTableQueueLine("Free Tables", freeTables);
+            pUI->PrintTableQueueLine("Occupied Tables", occupiedTables);
+            pUI->PrintTableQueueLine("Reserved Tables", reservedTables);
+            pUI->PrintTableQueueLine("Sharable Tables", sharableTables);
+
+            pUI->PrintSection("In-Service Orders");
+            pUI->PrintOrderPriLine("In-Service Orders", inServiceOrders);
+
+            pUI->PrintSection("Scooters");
+            pUI->PrintScooterPriLine("Free Scooters", freeScooters);
+            pUI->PrintScooterPriLine("Back Scooters", backScooters);
+            pUI->PrintScooterLinkedLine("Maintenance Scooters", maintScooters);
+
+            pUI->PrintSection("Final Lists");
+            pUI->PrintOrderQueueLine("Cancelled Orders", cancelledOrders);
+            pUI->PrintFinishedLine("Finished Orders", finishedOrders);
+
+            pUI->WaitForMode(mode);
         }
 
         currentTime++;
@@ -216,11 +243,13 @@ void Restaurant::RunSimulation() {
         }
     }
 
-    if (mode == 3) {
-        cout << "Silent Mode execution finished. Output file generated." << endl;
-    }
+    GenerateOutputFile();
 
-    GenerateOutputFile(); 
+    if (mode == 3)
+    {
+        cout << "Simulation ends, output file created." << endl;
+        cout << "Output file generated." << endl;
+    }
 
     delete pUI;           
     pUI = nullptr;
