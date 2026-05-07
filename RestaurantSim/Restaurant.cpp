@@ -70,7 +70,17 @@ Restaurant::~Restaurant() {
 
 void Restaurant::LoadFromFile(string filename) {
     ifstream file(filename);
-    if (!file.is_open()) return;
+    if (!file.is_open())
+    {
+        cout << "ERROR: Could not open input file: " << filename << endl;
+        return;
+    }
+    cout << "Loaded data successfully?" << endl;
+    cout << "Actions count: " << actionsList->getCount() << endl;
+    cout << "Free CS count: " << freeCS->getCount() << endl;
+    cout << "Free CN count: " << freeCN->getCount() << endl;
+    cout << "Free scooters count: " << freeScooters->GetCount() << endl;
+    cout << "Free tables count: " << freeTables->getCount() << endl;
 
     int numCN, numCS, speedCN, speedCS, numScooters, scooterSpeed, maintOrds, maintDur;
     file >> numCN >> numCS;
@@ -442,3 +452,4 @@ void Restaurant::GenerateOutputFile() {
 
     outFile.close();
 }
+
