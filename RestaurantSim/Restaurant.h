@@ -56,7 +56,7 @@ private:
 public:
     Restaurant();
     ~Restaurant();
-
+    void PrintPhase2Screen(int timestep);
     void RunSimulation();
     void LoadFromFile(string filename);
     void ExecuteActionsAtTime(int currentTime);

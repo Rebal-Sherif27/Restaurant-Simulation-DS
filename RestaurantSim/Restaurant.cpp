@@ -159,13 +159,267 @@ void Restaurant::CancelOrder(int orderID) {
     if (RemoveFromCookingOVC(orderID)) return;
     RemoveFromReadyOVC(orderID);
 }
+void Restaurant::PrintPhase2Screen(int timestep)
+{
+    pUI->ClearScreen();
 
-void Restaurant::RunSimulation() {
+    cout << "Current Timestep:" << timestep << endl;
+
+    cout << "================ Actions List ================" << endl;
+    cout << actionsList->getCount() << " actions remaining: ";
+
+    Queue<Action*> tempActions;
+    int printedActions = 0;
+
+    while (!actionsList->isEmpty())
+    {
+        Action* act = actionsList->dequeue();
+
+        if (printedActions < 10 && act)
+        {
+            cout << "[T=" << act->GetActionTime() << "] ";
+            printedActions++;
+        }
+
+        tempActions.enqueue(act);
+    }
+
+    while (!tempActions.isEmpty())
+    {
+        actionsList->enqueue(tempActions.dequeue());
+    }
+
+    cout << endl;
+    cout << "--> Print ONLY the first 10 actions currently in the actions list" << endl;
+
+    cout << endl;
+    cout << "------------ Pending Orders IDs --------------" << endl;
+    cout << "For each pending list print" << endl;
+    cout << "List count, order type, IDs of all orders in the list" << endl;
+
+    cout << pendingODG->getCount() << " ODG : ";
+    pendingODG->printIDs();
+
+    cout << pendingODN->getCount() << " ODN : ";
+    pendingODN->printIDs();
+
+    cout << pendingOT->getCount() << " OT  : ";
+    pendingOT->printIDs();
+
+    cout << pendingOVG->getCount() << " OVG : ";
+    pendingOVG->printIDs();
+
+    cout << pendingOVC->getCount() << " OVC : ";
+    pendingOVC->printIDs();
+
+    cout << pendingOVN->getCount() << " OVN : ";
+    pendingOVN->printIDs();
+
+    cout << endl;
+    cout << "------------ Available chefs IDs -------------" << endl;
+
+    Chef* chef = nullptr;
+
+    cout << freeCS->getCount() << " CS : ";
+    FreeCS tempCS;
+    while (freeCS->dequeue(chef))
+    {
+        if (chef) cout << chef->GetID() << " ";
+        tempCS.enqueue(chef);
+    }
+    while (tempCS.dequeue(chef))
+    {
+        freeCS->enqueue(chef);
+    }
+    cout << endl;
+
+    cout << freeCN->getCount() << " CN : ";
+    FreeCN tempCN;
+    while (freeCN->dequeue(chef))
+    {
+        if (chef) cout << chef->GetID() << " ";
+        tempCN.enqueue(chef);
+    }
+    while (tempCN.dequeue(chef))
+    {
+        freeCN->enqueue(chef);
+    }
+    cout << endl;
+
+    cout << "------------ Cooking orders [Orders ID, chef ID] ------------" << endl;
+
+    Order* ord = nullptr;
+    int pri = 0;
+    int cookingCount = 0;
+    CookingQueue tempCooking;
+
+    cout << "Cooking Orders: ";
+
+    while (cookingOrders->dequeue(ord, pri))
+    {
+        cookingCount++;
+
+        if (ord)
+            cout << ord->id << " ";
+
+        tempCooking.enqueue(ord, pri);
+    }
+
+    while (tempCooking.dequeue(ord, pri))
+    {
+        cookingOrders->enqueue(ord, pri);
+    }
+
+    if (cookingCount == 0)
+        cout << "None";
+
+    cout << endl;
+
+    cout << "------------ Ready Orders IDs ----------------" << endl;
+    cout << "For each Ready list print" << endl;
+    cout << "List count, order type, IDs of all orders in the list" << endl;
+
+    cout << readyDineIn->getCount() << " OD : ";
+    readyDineIn->printIDs();
+
+    cout << readyTakeaway->getCount() << " OT : ";
+    readyTakeaway->printIDs();
+
+    cout << readyDelivery->getCount() << " OV : ";
+    readyDelivery->printIDs();
+
+    cout << "------------ Available scooters IDs ----------" << endl;
+
+    Scooter* scooter = nullptr;
+    priQueue<Scooter*> tempScooters;
+
+    cout << freeScooters->GetCount() << " Scooters : ";
+
+    while (freeScooters->dequeue(scooter, pri))
+    {
+        if (scooter) cout << scooter->getID() << " ";
+        tempScooters.enqueue(scooter, pri);
+    }
+
+    while (tempScooters.dequeue(scooter, pri))
+    {
+        freeScooters->enqueue(scooter, pri);
+    }
+
+    cout << endl;
+
+    cout << "------------ Available tables [ID, capacity, free seats] ----" << endl;
+
+    Table* table = nullptr;
+    Queue<Table*> tempTables;
+
+    cout << freeTables->getCount() << " tables : ";
+
+    while (!freeTables->isEmpty())
+    {
+        table = freeTables->dequeue();
+
+        if (table)
+        {
+            int freeSeats = table->getCapacity() - table->getCurrentload();
+            cout << "[T" << table->getTabelID()
+                << ", " << table->getCapacity()
+                << ", " << freeSeats << "] ";
+        }
+
+        tempTables.enqueue(table);
+    }
+
+    while (!tempTables.isEmpty())
+    {
+        freeTables->enqueue(tempTables.dequeue());
+    }
+
+    cout << endl;
+
+    cout << "------------ In-Service orders [order ID, scooter/Table ID] --" << endl;
+
+    priQueue<Order*> tempInService;
+    int inServiceCount = 0;
+
+    cout << "Orders: ";
+
+    while (inServiceOrders->dequeue(ord, pri))
+    {
+        inServiceCount++;
+
+        if (ord)
+            cout << ord->id << " ";
+
+        tempInService.enqueue(ord, pri);
+    }
+
+    while (tempInService.dequeue(ord, pri))
+    {
+        inServiceOrders->enqueue(ord, pri);
+    }
+
+    if (inServiceCount == 0)
+        cout << "None";
+
+    cout << endl;
+
+    cout << "------------ In-maintenance scooters IDs ------" << endl;
+
+    cout << maintScooters->getCount() << " scooters: ";
+
+    MaintScooters tempMaint;
+    while (maintScooters->dequeue(scooter))
+    {
+        if (scooter) cout << scooter->getID() << " ";
+        tempMaint.enqueue(scooter);
+    }
+
+    while (tempMaint.dequeue(scooter))
+    {
+        maintScooters->enqueue(scooter);
+    }
+
+    cout << endl;
+
+    cout << "------------ Scooters Back to Restaurant IDs --" << endl;
+
+    priQueue<Scooter*> tempBack;
+
+    cout << backScooters->GetCount() << " scooters: ";
+
+    while (backScooters->dequeue(scooter, pri))
+    {
+        if (scooter) cout << scooter->getID() << " ";
+        tempBack.enqueue(scooter, pri);
+    }
+
+    while (tempBack.dequeue(scooter, pri))
+    {
+        backScooters->enqueue(scooter, pri);
+    }
+
+    cout << endl;
+
+    cout << "------------ Cancelled Orders IDs -------------" << endl;
+    cout << cancelledOrders->getCount() << " cancelled: ";
+    cancelledOrders->printIDs();
+
+    cout << "------------ Finished orders IDs --------------" << endl;
+    cout << "Finished Orders: ";
+    finishedOrders->printIDs();
+    cout << endl;
+}
+
+void Restaurant::RunSimulation()
+{
+    pUI = new UI();
+
     int mode = pUI->getMode();
+
     if (mode == 3)
     {
-        cout << "Silent Mode..." << endl;
-        cout << "Simulation starts..." << endl;
+        cout << "Simulation Starts in Silent mode ..." << endl;
     }
 
     LoadFromFile("input.txt");
@@ -186,53 +440,9 @@ void Restaurant::RunSimulation() {
         AssignTable(currentTime);
         AssignScooter(currentTime);
 
-        
         if (mode != 3)
         {
-            pUI->ClearScreen();
-            pUI->PrintHeader(currentTime);
-
-            pUI->PrintSection("Actions List");
-            pUI->PrintActionQueueLine("Remaining Actions", actionsList);
-
-            pUI->PrintSection("Pending Orders");
-            pUI->PrintOrderQueueLine("Pending ODG", pendingODG);
-            pUI->PrintOrderQueueLine("Pending ODN", pendingODN);
-            pUI->PrintOrderQueueLine("Pending OT", pendingOT);
-            pUI->PrintOrderQueueLine("Pending OVG", pendingOVG);
-            pUI->PrintOrderQueueLine("Pending OVC", pendingOVC);
-            pUI->PrintOrderQueueLine("Pending OVN", pendingOVN);
-
-            pUI->PrintSection("Available Chefs");
-            pUI->PrintChefLinkedLine("Free Special Chefs CS", freeCS);
-            pUI->PrintChefLinkedLine("Free Normal Chefs CN", freeCN);
-
-            pUI->PrintSection("Cooking Orders");
-            pUI->PrintOrderPriLine("Cooking Orders", cookingOrders);
-
-            pUI->PrintSection("Ready Orders");
-            pUI->PrintOrderQueueLine("Ready Dine-In OD", readyDineIn);
-            pUI->PrintOrderQueueLine("Ready Takeaway OT", readyTakeaway);
-            pUI->PrintOrderQueueLine("Ready Delivery OV", readyDelivery);
-
-            pUI->PrintSection("Tables");
-            pUI->PrintTableQueueLine("Free Tables", freeTables);
-            pUI->PrintTableQueueLine("Occupied Tables", occupiedTables);
-            pUI->PrintTableQueueLine("Reserved Tables", reservedTables);
-            pUI->PrintTableQueueLine("Sharable Tables", sharableTables);
-
-            pUI->PrintSection("In-Service Orders");
-            pUI->PrintOrderPriLine("In-Service Orders", inServiceOrders);
-
-            pUI->PrintSection("Scooters");
-            pUI->PrintScooterPriLine("Free Scooters", freeScooters);
-            pUI->PrintScooterPriLine("Back Scooters", backScooters);
-            pUI->PrintScooterLinkedLine("Maintenance Scooters", maintScooters);
-
-            pUI->PrintSection("Final Lists");
-            pUI->PrintOrderQueueLine("Cancelled Orders", cancelledOrders);
-            pUI->PrintFinishedLine("Finished Orders", finishedOrders);
-
+            PrintPhase2Screen(currentTime);
             pUI->WaitForMode(mode);
         }
 
@@ -248,7 +458,8 @@ void Restaurant::RunSimulation() {
             readyTakeaway->isEmpty() &&
             readyDelivery->isEmpty() &&
             deliveryOrders->isEmpty() &&
-            inServiceOrders->isEmpty()) {
+            inServiceOrders->isEmpty())
+        {
             done = true;
         }
     }
@@ -257,11 +468,10 @@ void Restaurant::RunSimulation() {
 
     if (mode == 3)
     {
-        cout << "Simulation ends, output file created." << endl;
-        cout << "Output file generated." << endl;
+        cout << "Simulation ends, Output file created" << endl;
     }
 
-    delete pUI;           
+    delete pUI;
     pUI = nullptr;
 }
 
