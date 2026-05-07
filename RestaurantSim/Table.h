@@ -21,7 +21,6 @@ public:
 	void setReserved(bool status);  
 
 
-	// Core Functions
 	void assignorder(Order* neworder);
 	void freeTable();
 
