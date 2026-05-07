@@ -108,14 +108,8 @@ bool LinkedQueue<T>::peek(T& frntEntry) const
 template <typename T>
 LinkedQueue<T>::~LinkedQueue()
 {
-	cout << "\nStarting LinkedQueue destructor...";
-	cout << "\nFreeing all nodes in the queue...";
-
 	T temp;
 	while (dequeue(temp));
-
-	cout << "\n Is LinkedQueue Empty now?? ==> " << boolalpha << isEmpty();
-	cout << "\nEnding LinkedQueue destructor..." << endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
