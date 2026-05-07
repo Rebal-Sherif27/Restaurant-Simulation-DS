@@ -6,7 +6,6 @@ using namespace std;
         bool found = false;
         Order* currentOrder;
 
-        // Empty this queue into the temp queue, looking for the ID
         while (!this->isEmpty()) {
             this->dequeue(currentOrder);
             if (currentOrder->id == id) {
@@ -17,7 +16,6 @@ using namespace std;
             }
         }
 
-        // Put everything back
         while (!tempQueue.isEmpty()) {
             tempQueue.dequeue(currentOrder);
             this->enqueue(currentOrder);

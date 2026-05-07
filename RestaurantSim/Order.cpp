@@ -8,6 +8,7 @@ Order::Order(int id, OrderType t, int sz, int prc, int reqTime) {
     this->price = prc;
     this->requestTime = reqTime;
     assignedChef = nullptr;
+    assignedScooter = nullptr;
 
     this->seats = 0;
     this->duration = 0;
@@ -48,6 +49,7 @@ Order::Order(int reqTime, int id, OrderType t, int sz, int pr, int st, int dur, 
     this->serviceStartTime = -1;
 
     this->assignedChef = nullptr;
+    this->assignedScooter = nullptr;
 }
 
 Order::~Order() {}

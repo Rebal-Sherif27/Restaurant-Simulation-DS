@@ -10,13 +10,13 @@
 #include "MaintScooters.h"
 using namespace std;
 
-// ==================== CONSTRUCTOR / DESTRUCTOR (merged) ====================
 Restaurant::Restaurant()
     : cookingOrders(new CookingQueue())
     , readyOrders(new Queue<Order*>())
     , readyDineIn(new Queue<Order*>())
     , readyTakeaway(new Queue<Order*>())
     , readyDelivery(new Queue<Order*>())
+    , deliveryOrders(new priQueue<Order*>())
     , inServiceOrders(new priQueue<Order*>())
     , finishedOrders(new FinishedOrders())
     , freeCN(new FreeCN())                
@@ -54,6 +54,7 @@ Restaurant::~Restaurant() {
     delete readyDineIn;
     delete readyTakeaway;
     delete readyDelivery;
+    delete deliveryOrders;
     delete inServiceOrders;
     delete finishedOrders;
     delete cancelledOrders;
@@ -76,6 +77,18 @@ void Restaurant::LoadFromFile(string filename) {
     file >> speedCN >> speedCS;
     file >> numScooters >> scooterSpeed;
     file >> maintOrds >> maintDur;
+
+    for (int i = 0; i < numCN; i++) {
+        freeCN->enqueue(new Chef(i + 1, CN, speedCN));
+    }
+
+    for (int i = 0; i < numCS; i++) {
+        freeCS->enqueue(new Chef(numCN + i + 1, CS, speedCS));
+    }
+
+    for (int i = 0; i < numScooters; i++) {
+        freeScooters->enqueue(new Scooter(i + 1, scooterSpeed, maintDur, maintOrds), scooterSpeed);
+    }
     int totalTables;
     file >> totalTables;
     for (int i = 0; i < totalTables; i++) {
@@ -137,7 +150,6 @@ void Restaurant::CancelOrder(int orderID) {
     RemoveFromReadyOVC(orderID);
 }
 
-// ==================== RUN SIMULATION  ====================
 void Restaurant::RunSimulation() {
     pUI = new UI();
     int mode = pUI->getMode();
@@ -147,19 +159,25 @@ void Restaurant::RunSimulation() {
 
     while (!done)
     {
-        ExecuteActionsAtTime(currentTime);   
-        FreeFinishedTables(currentTime);      
-        AssignTable(currentTime);             
+        ExecuteActionsAtTime(currentTime);
+        FreeFinishedTables(currentTime);
+        CheckFinishedDeliveryOrders(currentTime);
+        CheckBackScooters(currentTime);
+        CheckScooterMaintenance(currentTime);
+        AssignPendingToChef(currentTime);
+        MoveCookingToReady(currentTime);
+        FinalizeTakeawayOrders(currentTime);
+        AssignTable(currentTime);
+        AssignScooter(currentTime);
 
         
         Queue<Order*> allPendingForUI;
 
-        // Helper lambda to copy a queue without emptying the original
         Queue<Order*> temp;
         Queue<Order*>* sources[] = { pendingODG, pendingODN, pendingOT, pendingOVG, pendingOVC, pendingOVN };
 
         for (int i = 0; i < 6; i++) {
-            Queue<Order*> temp; // MOVE THIS HERE
+            Queue<Order*> temp; 
             while (!sources[i]->isEmpty()) {
                 Order* o = sources[i]->dequeue();
                 allPendingForUI.enqueue(o);
@@ -178,7 +196,7 @@ void Restaurant::RunSimulation() {
         }
         else if (mode == 2) {
             pUI->PrintPhase1Screen(currentTime, &allPendingForUI, readyOrders, inServiceOrders, finishedOrders);
-            pUI->WaitForKey(); // Just use the normal wait for key instead!
+            pUI->WaitForKey(); 
         }
 
         currentTime++;
@@ -187,11 +205,16 @@ void Restaurant::RunSimulation() {
             pendingODG->isEmpty() && pendingODN->isEmpty() &&
             pendingOT->isEmpty() && pendingOVG->isEmpty() &&
             pendingOVC->isEmpty() && pendingOVN->isEmpty() &&
-            cookingOrders->isEmpty() && readyOrders->isEmpty() &&
+            cookingOrders->isEmpty() &&
+            readyOrders->isEmpty() &&
+            readyDineIn->isEmpty() &&
+            readyTakeaway->isEmpty() &&
+            readyDelivery->isEmpty() &&
+            deliveryOrders->isEmpty() &&
             inServiceOrders->isEmpty()) {
             done = true;
         }
-    } // END of whike loop 
+    }
 
     if (mode == 3) {
         cout << "Silent Mode execution finished. Output file generated." << endl;
@@ -203,7 +226,6 @@ void Restaurant::RunSimulation() {
     pUI = nullptr;
 }
 
-// ==================== EXISTING FUNCTIONS (kept exactly as you had) ====================
 void Restaurant::addPendingODG(Order* pOrd) { pendingODG->enqueue(pOrd); }
 void Restaurant::addPendingODN(Order* pOrd) { pendingODN->enqueue(pOrd); }
 void Restaurant::addPendingOT(Order* pOrd) { pendingOT->enqueue(pOrd); }
@@ -212,7 +234,7 @@ void Restaurant::addPendingOVC(Order* pOrd) { pendingOVC->enqueue(pOrd); }
 void Restaurant::addPendingOVN(Order* pOrd) { pendingOVN->enqueue(pOrd); }
 
 bool Restaurant::RemoveFromPendingOVC(int id) {
-    Queue<Order*> temp; // Declaring temp
+    Queue<Order*> temp; 
     bool found = false;
 
     while (!pendingOVC->isEmpty()) {
@@ -257,17 +279,15 @@ bool Restaurant::RemoveFromReadyOVC(int id) {
 void Restaurant::ReleaseChefFromOrder(int id) {
 }
 
-// ==================== EXISTING TABLE FUNCTIONS  ====================
 void Restaurant::AssignTable(int timestep) {
-    if (readyOrders->isEmpty()) return;
+    if (readyDineIn->isEmpty()) return;
     if (occupiedTables->isEmpty() && freeTables->isEmpty()) return;
 
-    Order* nextOrder = readyOrders->peekFront();
+    Order* nextOrder = readyDineIn->peekFront();
     int orderSize = nextOrder->getSize();
     Table* foundTable = nullptr;
     bool isNewTable = false;
 
-    // Searchinf for any occupied sharable tables
     Queue<Table*> tempOccupied;
     while (!occupiedTables->isEmpty()) {
         Table* t = occupiedTables->dequeue();
@@ -278,7 +298,6 @@ void Restaurant::AssignTable(int timestep) {
     }
     while (!tempOccupied.isEmpty()) occupiedTables->enqueue(tempOccupied.dequeue());
 
-    // Searchs the free tables
     if (!foundTable) {
         Queue<Table*> tempFree;
         while (!freeTables->isEmpty()) {
@@ -295,7 +314,7 @@ void Restaurant::AssignTable(int timestep) {
     }
 
     if (foundTable) {
-        readyOrders->dequeue();
+        readyDineIn->dequeue();
         nextOrder->serviceStartTime = timestep;
         nextOrder->assignTime = timestep;
         nextOrder->finishTime = timestep + nextOrder->duration;
@@ -353,7 +372,6 @@ void Restaurant::FreeFinishedTables(int timestep) {
     }
 }
 
-// ==================== STATISTICS & OUTPUT ====================
 void Restaurant::GenerateOutputFile() {
     ofstream outFile("output.txt");
     if (!outFile.is_open()) return;
@@ -385,7 +403,6 @@ void Restaurant::GenerateOutputFile() {
         delete pOrd; 
     }
 
-    // Print Summary Statistics
     outFile << "-------------------------------------------------------\n";
     outFile << "Total Orders: " << totalOrders << "\n";
     if (totalOrders > 0) {

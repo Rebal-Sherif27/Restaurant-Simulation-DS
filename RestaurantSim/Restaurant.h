@@ -38,6 +38,7 @@ private:
     Queue<Order*>* readyDineIn;
     Queue<Order*>* readyTakeaway;
     Queue<Order*>* readyDelivery;
+    priQueue<Order*>* deliveryOrders;
     priQueue<Order*>* inServiceOrders;
     Queue<Order*>* cancelledOrders;
 
@@ -92,6 +93,11 @@ public:
     void AssignPendingToChef(int currentTime);
     void MoveCookingToReady(int currentTime);
     void FinalizeTakeawayOrders(int currentTime);
+
+    void AssignScooter(int currentTime);
+    void CheckFinishedDeliveryOrders(int currentTime);
+    void CheckBackScooters(int currentTime);
+    void CheckScooterMaintenance(int currentTime);
 };
 
 #endif

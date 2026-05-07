@@ -2,10 +2,13 @@
 #include <string>
 using namespace std;
 
+
 enum OrderType {
     ODG, ODN, OT, OVG, OVC, OVN
 };
 class Chef;
+class Scooter;
+
 class Order {
     int tableID = -1;
 public:
@@ -19,21 +22,18 @@ public:
     bool canShare;
     int distance;
     Chef* assignedChef;
+    Scooter* assignedScooter;
 
-    // Tracking Data
     int finishTime;
     int resourceID;
     string resourceType;
 
-    // New fields for your features
     int assignTime;
     int readyTime;
     int serviceStartTime;
 
-    // Old constructor (kept for compatibility)
     Order(int id, OrderType t, int size, int price, int reqTime);
 
-    // New constructor (for your RequestAction)
     Order(int reqTime, int id, OrderType t, int sz, int pr, int st, int dur, bool share, int dist);
 
     ~Order();

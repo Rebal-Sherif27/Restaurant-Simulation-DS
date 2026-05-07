@@ -6,7 +6,7 @@ class Fit_Tables : public priQueue < Table* >
 {
     Table* getBest()
     {   
-        priQueue<Table*> tempQueue;  // 1. Create a local temporary queue
+        priQueue<Table*> tempQueue;  
         Table* foundTable = nullptr;
 
         while (!isEmpty())
@@ -17,9 +17,8 @@ class Fit_Tables : public priQueue < Table* >
             if (best->getCapacity() >= best->getCurrentload())
                 return best;
             else
-            tempQueue.enqueue(best, p); // Reinsert the table to maintain the priority order
+            tempQueue.enqueue(best, p); 
         }
-        // Restore the original queue
         while (!tempQueue.isEmpty()) {
             Table* t;
             int p;
